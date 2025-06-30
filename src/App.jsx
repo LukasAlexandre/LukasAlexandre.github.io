@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea.jsx'
 import './App.css'
 
 // Assets imports
-import profileImage from './assets/images/profile.jpg'
+import profileImage from './100711785.jpeg'
 import thamis01 from './assets/images/thamis-01.png'
 import fokus01 from './assets/images/fokus-01.png'
 import aluraDev01 from './assets/images/alura-dev-01.png'
@@ -18,18 +18,18 @@ function App() {
   const [isDark, setIsDark] = useState(false)
   const [language, setLanguage] = useState('pt')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
+
 
   // Load theme and language from localStorage
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
     const savedLanguage = localStorage.getItem('language')
-    
+
     if (savedTheme === 'dark') {
       setIsDark(true)
       document.documentElement.classList.add('dark')
     }
-    
+
     if (savedLanguage) {
       setLanguage(savedLanguage)
     }
@@ -86,7 +86,7 @@ function App() {
         subtitle: 'Minha jornada na programação',
         text1: 'Sou estudante de Engenharia de Software e desenvolvedor FullStack autodidata, apaixonado por criar experiências incríveis e envolventes para os usuários. Estou sempre buscando aperfeiçoar minhas habilidades e aprender novas tecnologias.',
         text2: 'Minha paixão por computadores começou cedo, mas foi em 2022 que conheci a programação, apresentado por um amigo de trabalho. Motivado por ele, iniciei meus estudos em algoritmos e lógica de programação, e desde então, não consigo mais parar.',
-        text3: 'Atualmente me especializo em front-end, ao mesmo tempo em que estudo back-end em paralelo. Estou constantemente buscando novas oportunidades para aplicar meus conhecimentos e contribuir para projetos desafiadores.',
+        text3: 'Atualmente adiquiro conhecimento em front-end, ao mesmo tempo em que estudo back-end em paralelo. Estou constantemente buscando novas oportunidades para aplicar meus conhecimentos e contribuir para projetos desafiadores.',
         experience: 'Anos de experiência',
         projects: 'Projetos concluídos',
         technologies: 'Tecnologias dominadas'
@@ -257,21 +257,23 @@ function App() {
       { name: 'HTML5', level: 90 },
       { name: 'CSS3', level: 85 },
       { name: 'JavaScript', level: 80 },
-      { name: 'React', level: 75 },
-      { name: 'Tailwind CSS', level: 70 },
-      { name: 'Bootstrap', level: 80 }
+      { name: 'React', level: 65 },
+      { name: 'Tailwind CSS', level: 60 },
+      { name: 'Bootstrap', level: 50 }
     ],
     backend: [
-      { name: 'Node.js', level: 70 },
-      { name: 'C#', level: 65 },
-      { name: 'PHP', level: 60 },
-      { name: 'Java', level: 55 }
+      { name: 'Node.js', level: 65 },
+      { name: 'Express.js', level: 60 },
+      { name: 'C#', level: 60 },
+      { name: 'PHP', level: 50 },
+      { name: 'Java', level: 45 }
     ],
     tools: [
-      { name: 'Git', level: 75 },
-      { name: 'MySQL', level: 70 },
-      { name: 'Prisma', level: 65 },
-      { name: 'Vite', level: 70 }
+      { name: 'Git/GitHub', level: 75 },
+      { name: 'MySQL/SQL', level: 65 },
+      { name: 'Prisma', level: 50 },
+      { name: 'MongoDB', level: 50 },
+      { name: 'Vite', level: 60 }
     ]
   }
 
@@ -292,8 +294,8 @@ function App() {
       description: currentLang.projects.fokus.description,
       image: fokus01,
       technologies: currentLang.projects.fokus.tech,
-      github: '#',
-      live: '#'
+      github: 'https://github.com/LukasAlexandre/Fokus',
+      live: 'https://fokus-b2prbbs8e-lukas-projects-72e77d7d.vercel.app/'
     },
     {
       id: 3,
@@ -301,8 +303,8 @@ function App() {
       description: currentLang.projects.aluraDev.description,
       image: aluraDev01,
       technologies: currentLang.projects.aluraDev.tech,
-      github: '#',
-      live: '#'
+      github: 'https://github.com/LukasAlexandre/Challenge-Front-end-First-Edition',
+      live: 'https://challenge-front-end-first-edition-2jt0ji5k5.vercel.app/'
     }
   ]
 
@@ -353,7 +355,7 @@ function App() {
                 <Globe className="h-4 w-4" />
                 <span className="ml-1 text-xs">{language.toUpperCase()}</span>
               </Button>
-              
+
               {/* Mobile menu button */}
               <Button
                 variant="ghost"
@@ -467,14 +469,15 @@ function App() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
+              className="flex justify-center"
             >
-              <div className="relative">
+              <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md rounded-2xl overflow-hidden shadow-xl ring-2 ring-emerald-500/40">
                 <img
                   src={profileImage}
                   alt="Lukas Alexandre"
-                  className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+                  className="w-full h-auto object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-emerald-400/20 to-blue-500/20 rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-emerald-400/10 to-blue-500/10 pointer-events-none" />
               </div>
             </motion.div>
 
