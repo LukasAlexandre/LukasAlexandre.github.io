@@ -13,6 +13,9 @@ import profileImage from './100711785.jpeg'
 import thamis01 from './assets/images/thamis-01.png'
 import fokus01 from './assets/images/fokus-01.png'
 import aluraDev01 from './assets/images/alura-dev-01.png'
+import davi01 from './assets/images/dave01.png'
+import optimus01 from './assets/images/optimus.png'
+import alurabooks01 from './assets/images/books.png'
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -87,9 +90,9 @@ function App() {
         text1: 'Sou estudante de Engenharia de Software e desenvolvedor FullStack autodidata, apaixonado por criar experiências incríveis e envolventes para os usuários. Estou sempre buscando aperfeiçoar minhas habilidades e aprender novas tecnologias.',
         text2: 'Minha paixão por computadores começou cedo, mas foi em 2022 que conheci a programação, apresentado por um amigo de trabalho. Motivado por ele, iniciei meus estudos em algoritmos e lógica de programação, e desde então, não consigo mais parar.',
         text3: 'Atualmente adiquiro conhecimento em front-end, ao mesmo tempo em que estudo back-end em paralelo. Estou constantemente buscando novas oportunidades para aplicar meus conhecimentos e contribuir para projetos desafiadores.',
-        experience: 'Anos de experiência',
-        projects: 'Projetos concluídos',
-        technologies: 'Tecnologias dominadas'
+        experience: 'Experiência',
+        projects: 'Projetos',
+        technologies: 'Tecnologias'
       },
       skills: {
         title: 'Tecnologias',
@@ -126,20 +129,43 @@ function App() {
         student: {
           title: 'Estudante de Engenharia de Software',
           company: 'Universidade',
-          period: '2022 - Atual',
+          period: '2025 - Atual',
           description: 'Cursando Engenharia de Software com foco em desenvolvimento web e mobile. Participando de projetos de extensão e pesquisa.'
         },
         selfTaught: {
-          title: 'Desenvolvedor Autodidata',
+          title: 'Desenvolvedor Autodidata(FreeLancer)',
           company: 'Estudos Independentes',
-          period: '2022 - Atual',
+          period: '2025 - Atual',
           description: 'Aprendizado contínuo através de cursos online, documentações e projetos práticos. Foco em tecnologias web modernas.'
         },
         earlyCareer: {
-          title: 'Início da Carreira',
-          company: 'Experiência Profissional',
-          period: '16 anos - Atual',
-          description: 'Comecei minha carreira profissional aos 16 anos, desenvolvendo habilidades de trabalho em equipe e resolução de problemas.'
+          title: 'Assistente de Engenharia de Produto',
+          company: 'Grupo Multi',
+          period: 'Mai 2025 - Atual',
+          description:
+            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+        },
+        teste: {
+          title: 'Auxiliar de Engenharia de Testes',
+          company: 'Grupo Multi',
+          period: 'Ago 2022 - Nov 2023',
+          description:
+            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+        },
+        monitor: {
+          id: 4,
+          title: 'Monitor de Manufatura',
+          company: 'Grupo Multi',
+          period: 'Mai 2024 - Mai 2025',
+          description:
+            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+        },
+        Auxiliar: {
+          title: 'Auxiliar de Assistencia Técnica',
+          company: 'Grupo Multi',
+          period: 'Out 2021 -  Ago 2022',
+          description:
+            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
         }
       },
       contact: {
@@ -211,27 +237,52 @@ function App() {
         }
       },
       experience: {
-        title: 'Experience',
-        subtitle: 'My professional journey',
-        current: 'Current',
-        student: {
-          title: 'Software Engineering Student',
-          company: 'University',
-          period: '2022 - Current',
-          description: 'Studying Software Engineering with focus on web and mobile development. Participating in extension and research projects.'
-        },
-        selfTaught: {
-          title: 'Self-taught Developer',
-          company: 'Independent Studies',
-          period: '2022 - Current',
-          description: 'Continuous learning through online courses, documentation and practical projects. Focus on modern web technologies.'
-        },
-        earlyCareer: {
-          title: 'Early Career',
-          company: 'Professional Experience',
-          period: '16 years old - Current',
-          description: 'Started my professional career at 16, developing teamwork and problem-solving skills.'
-        }
+  title: 'Experience',
+  subtitle: 'My professional journey',
+  current: 'Current',
+  student: {
+    title: 'Software Engineering Student',
+    company: 'University',
+    period: '2022 - Current',
+    description:
+      'Studying Software Engineering with a focus on web and mobile development. Participating in extension and research projects.'
+  },
+  selfTaught: {
+    title: 'Self-taught Developer (Freelancer)',
+    company: 'Independent Studies',
+    period: '2022 - Current',
+    description:
+      'Continuous learning through online courses, documentation, and hands-on projects. Focused on modern web technologies.'
+  },
+  earlyCareer: {
+    title: 'Product Engineering Assistant',
+    company: 'Grupo Multi',
+    period: 'May 2025 - Current',
+    description:
+      'Working on software and image validation in production environments. Ensuring technical compliance, supporting engineering and quality teams in homologation, functional testing, and introduction of new products (NPIs).'
+  },
+  teste: {
+    title: 'Test Engineering Assistant',
+    company: 'Grupo Multi',
+    period: 'Aug 2022 - Nov 2023',
+    description:
+      'Worked in test setups, preventive and corrective maintenance on production lines of smartphones, notebooks, multimedia, and network equipment. Supported engineering and quality processes.'
+  },
+  monitor: {
+    id: 4,
+    title: 'Manufacturing Monitor',
+    company: 'Grupo Multi',
+    period: 'May 2024 - May 2025',
+    description:
+      'Managed teams and production demands using SAP and SPM systems. Ensured compliance with production goals, procedures, and inventory planning.'
+  },
+  Auxiliar: {
+    title: 'Technical Support Assistant',
+    company: 'Grupo Multi',
+    period: 'Oct 2021 - Aug 2022',
+    description:
+      'Provided technical support in the production lines, diagnosing and solving issues in smartphones and notebooks. Acted in exclusive assistance for final product quality.'
+  }
       },
       contact: {
         title: 'Contact',
@@ -254,19 +305,16 @@ function App() {
   // Technologies data
   const technologies = {
     frontend: [
-      { name: 'HTML5', level: 90 },
-      { name: 'CSS3', level: 85 },
-      { name: 'JavaScript', level: 80 },
-      { name: 'React', level: 65 },
-      { name: 'Tailwind CSS', level: 60 },
-      { name: 'Bootstrap', level: 50 }
+      { name: 'HTML5', level: 50 },
+      { name: 'CSS3', level: 50 },
+      { name: 'JavaScript', level: 60 },
+      { name: 'React', level: 50 },
     ],
     backend: [
       { name: 'Node.js', level: 65 },
       { name: 'Express.js', level: 60 },
-      { name: 'C#', level: 60 },
-      { name: 'PHP', level: 50 },
-      { name: 'Java', level: 45 }
+      { name: 'Prisma', level: 60 },
+      { name: 'C#', level: 50 },
     ],
     tools: [
       { name: 'Git/GitHub', level: 75 },
@@ -277,7 +325,6 @@ function App() {
     ]
   }
 
-  // Projects data
   const projects = [
     {
       id: 1,
@@ -286,7 +333,7 @@ function App() {
       image: thamis01,
       technologies: currentLang.projects.thamis.tech,
       github: 'https://github.com/LukasAlexandre/Thamis-cake',
-      live: 'https://thamis-cake-toyl-jjo22c952-lukas-projects-72e77d7d.vercel.app/index.html'
+      live: 'https://thamis-cake-toyl-jjo22c952-lukas-projects-72e77d7d.vercel.app/index.html',
     },
     {
       id: 2,
@@ -295,7 +342,7 @@ function App() {
       image: fokus01,
       technologies: currentLang.projects.fokus.tech,
       github: 'https://github.com/LukasAlexandre/Fokus',
-      live: 'https://fokus-b2prbbs8e-lukas-projects-72e77d7d.vercel.app/'
+      live: 'https://fokus-b2prbbs8e-lukas-projects-72e77d7d.vercel.app/',
     },
     {
       id: 3,
@@ -304,10 +351,36 @@ function App() {
       image: aluraDev01,
       technologies: currentLang.projects.aluraDev.tech,
       github: 'https://github.com/LukasAlexandre/Challenge-Front-end-First-Edition',
-      live: 'https://challenge-front-end-first-edition-2jt0ji5k5.vercel.app/'
+      live: 'https://challenge-front-end-first-edition-2jt0ji5k5.vercel.app/',
+    },
+    {
+      id: 4,
+      title: 'Imobiliária Davi',
+      description: 'Sistema completo para gestão de imóveis com frontend em React, backend com Node.js e banco de dados MySQL via Prisma. Projeto robusto, desenvolvido para uma imobiliária real.',
+      image: davi01,
+      technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'Prisma', 'MySQL', 'HTML', 'CSS'],
+      github: '',
+      live: 'https://front-fxypyvbbn-lukas-projects-72e77d7d.vercel.app/',
+    },
+    {
+      id: 5,
+      title: 'Optimus Tech',
+      description: 'Landing page institucional responsiva para uma agência fictícia do setor de tecnologia. Criada com HTML semântico e estilização moderna em CSS puro.',
+      image: optimus01,
+      technologies: ['HTML', 'CSS'],
+      github: 'https://github.com/LukasAlexandre/7-Days-of-Code-HTML-e-CSS-Optimus-Tech',
+      live: 'https://optimus-tech-egh1tr6ca-lukas-projects-72e77d7d.vercel.app/',
+    },
+    {
+      id: 6,
+      title: 'Alura Books',
+      description: 'Interface de uma livraria digital com foco em livros de tecnologia. Projeto realizado como desafio da plataforma Alura, aplicando conceitos de layout e responsividade.',
+      image: alurabooks01,
+      technologies: ['HTML', 'CSS'],
+      github: 'https://github.com/LukasAlexandre/Alurabooks',
+      live: 'https://alurabooks-green-delta.vercel.app/',
     }
   ]
-
   return (
     <div className="min-h-screen bg-background text-foreground font-inter">
       {/* Navigation */}
@@ -494,15 +567,15 @@ function App() {
 
               <div className="grid grid-cols-3 gap-6 pt-8">
                 <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">3+</div>
+                  <div className="text-3xl font-bold gradient-text">1+</div>
                   <div className="text-sm text-muted-foreground">{currentLang.about.experience}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">10+</div>
+                  <div className="text-3xl font-bold gradient-text">6+</div>
                   <div className="text-sm text-muted-foreground">{currentLang.about.projects}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold gradient-text">8+</div>
+                  <div className="text-3xl font-bold gradient-text">4+</div>
                   <div className="text-sm text-muted-foreground">{currentLang.about.technologies}</div>
                 </div>
               </div>
@@ -659,7 +732,7 @@ function App() {
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-64 object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                       <Button size="sm" variant="secondary" asChild>
@@ -720,6 +793,27 @@ function App() {
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="relative flex items-start"
+                >
+                  <div className="flex-shrink-0 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-10">
+                    1
+                  </div>
+                  <div className="ml-8">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <h3 className="text-xl font-semibold">{currentLang.experience.selfTaught.title}</h3>
+                      <Badge variant="outline">{currentLang.experience.current}</Badge>
+                    </div>
+                    <p className="text-blue-500 font-medium mb-2">{currentLang.experience.selfTaught.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.selfTaught.period}</p>
+                    <p className="text-muted-foreground">{currentLang.experience.selfTaught.description}</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                   className="relative flex items-start"
@@ -737,28 +831,40 @@ function App() {
                     <p className="text-muted-foreground">{currentLang.experience.student.description}</p>
                   </div>
                 </motion.div>
-
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
                   className="relative flex items-start"
                 >
-                  <div className="flex-shrink-0 w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-10">
+                  <div className="flex-shrink-0 w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold z-10">
+                    1
+                  </div>
+                  <div className="ml-8">
+                    <h3 className="text-xl font-semibold mb-2">{currentLang.experience.earlyCareer.title}</h3>
+                    <p className="text-purple-500 font-medium mb-2">{currentLang.experience.earlyCareer.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.earlyCareer.period}</p>
+                    <p className="text-muted-foreground">{currentLang.experience.earlyCareer.description}</p>
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative flex items-start"
+                >
+                  <div className="flex-shrink-0 w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold z-10">
                     2
                   </div>
                   <div className="ml-8">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <h3 className="text-xl font-semibold">{currentLang.experience.selfTaught.title}</h3>
-                      <Badge variant="outline">{currentLang.experience.current}</Badge>
-                    </div>
-                    <p className="text-blue-500 font-medium mb-2">{currentLang.experience.selfTaught.company}</p>
-                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.selfTaught.period}</p>
-                    <p className="text-muted-foreground">{currentLang.experience.selfTaught.description}</p>
+                    <h3 className="text-xl font-semibold mb-2">{currentLang.experience.monitor.title}</h3>
+                    <p className="text-purple-500 font-medium mb-2">{currentLang.experience.monitor.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.monitor.period}</p>
+                    <p className="text-muted-foreground">{currentLang.experience.monitor.description}</p>
                   </div>
                 </motion.div>
-
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -770,10 +876,28 @@ function App() {
                     3
                   </div>
                   <div className="ml-8">
-                    <h3 className="text-xl font-semibold mb-2">{currentLang.experience.earlyCareer.title}</h3>
-                    <p className="text-purple-500 font-medium mb-2">{currentLang.experience.earlyCareer.company}</p>
-                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.earlyCareer.period}</p>
-                    <p className="text-muted-foreground">{currentLang.experience.earlyCareer.description}</p>
+                    <h3 className="text-xl font-semibold mb-2">{currentLang.experience.teste.title}</h3>
+                    <p className="text-purple-500 font-medium mb-2">{currentLang.experience.teste.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.teste.period}</p>
+                    <p className="text-muted-foreground">{currentLang.experience.teste.description}</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative flex items-start"
+                >
+                  <div className="flex-shrink-0 w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold z-10">
+                    4
+                  </div>
+                  <div className="ml-8">
+                    <h3 className="text-xl font-semibold mb-2">{currentLang.experience.Auxiliar.title}</h3>
+                    <p className="text-purple-500 font-medium mb-2">{currentLang.experience.Auxiliar.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{currentLang.experience.Auxiliar.period}</p>
+                    <p className="text-muted-foreground">{currentLang.experience.Auxiliar.description}</p>
                   </div>
                 </motion.div>
               </div>
