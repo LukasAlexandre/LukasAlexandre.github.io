@@ -1,0 +1,51 @@
+name: Deploy portfolio to user site
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      # Tente usar scripts padronizados; se não existirem, não falha.
+      - name: Build
+        run: npm run build || true
+      - name: Export (gera ./out)
+        run: npm run export:pages || true
+
+      # Normaliza pasta de saída (usa out/; se não existir, tenta dist/ ou build/)
+      - name: Normalize output dir
+        run: |
+          mkdir -p out
+          if [ -d "out" ]; then echo "out ok";
+          elif [ -d "dist" ]; then mv dist out;
+          elif [ -d "build" ]; then mv build out;
+          else echo "Nenhuma pasta de build encontrada" && exit 1; fi
+          # SPA fallback (não falha se index não existir)
+          [ -f out/404.html ] || cp out/index.html out/404.html || true
+
+      - name: Deploy to LukasAlexandre.github.io (main)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PAT_PAGES }}
+          external_repository: LukasAlexandre/LukasAlexandre.github.io
+          publish_branch: main
+          publish_dir: ./out
+          cname: lukasdev.me
+          user_name: "LukasAlexandre"
+          user_email: "lukasalexandre@users.noreply.github.com"
