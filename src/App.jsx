@@ -146,8 +146,7 @@ function App() {
             'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
         },
         teste: {
-          title: 'Auxiliar de Engenharia de 7d7d.vercel.app/', // link atualizado
-        Testes',
+          title: 'Auxiliar de Engenharia de Testes', // link Testes',
           company: 'Grupo Multi',
           period: 'Ago 2022 - Nov 2023',
           description:
