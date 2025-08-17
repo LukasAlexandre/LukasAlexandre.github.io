@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { motion , AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Globe, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Code, Database, Wrench, MapPin, Phone, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
