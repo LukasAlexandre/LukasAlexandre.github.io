@@ -146,7 +146,8 @@ function App() {
             'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
         },
         teste: {
-          title: 'Auxiliar de Engenharia de Testes',
+          title: 'Auxiliar de Engenharia de 7d7d.vercel.app/', // link atualizado
+        Testes',
           company: 'Grupo Multi',
           period: 'Ago 2022 - Nov 2023',
           description:
@@ -360,7 +361,7 @@ function App() {
       image: davi01,
       technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'Prisma', 'MySQL', 'HTML', 'CSS'],
       github: '',
-      live: 'https://front-fxypyvbbn-lukas-projects-72e77d7d.vercel.app/',
+      live: 'https://front-8gckb436q-lukas-projects-72e77d7d.vercel.app/',
     },
     {
       id: 5,
