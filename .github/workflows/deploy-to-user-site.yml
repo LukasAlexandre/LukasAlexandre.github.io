@@ -2,8 +2,7 @@ name: Deploy portfolio to user site
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]   # seu repo usa master
   workflow_dispatch:
 
 jobs:
@@ -14,26 +13,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Detecta a pasta do projeto (onde está o package.json)
+      - name: Detect project directory
+        id: detect
+        run: |
+          set -e
+          CANDIDATE=$(git ls-files | grep -E '(^|/)package.json$' | head -n1 | xargs -I{} dirname {})
+          if [ -z "$CANDIDATE" ]; then
+            echo "Nenhum package.json encontrado no repo."
+            exit 1
+          fi
+          echo "PROJECT_DIR=$CANDIDATE" >> $GITHUB_ENV
+          echo "Projeto detectado em: $CANDIDATE"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
 
       - name: Install deps
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        working-directory: ${{ env.PROJECT_DIR }}
 
-      - name: Build (tenta Next/Vite)
+      # Tenta Vite/Next/export; ignora scripts que não existem
+      - name: Build (tentativas)
         run: |
           npm run build || true
           npm run export || true
           npm run export:pages || true
+        working-directory: ${{ env.PROJECT_DIR }}
 
       - name: Normalize output dir
         run: |
+          cd "${{ env.PROJECT_DIR }}"
           mkdir -p out
-          if [ -d "out" ]; then echo "using out/";
+          if [ -d "out" ]; then echo "using out";
           elif [ -d "dist" ]; then mv dist out;
           elif [ -d "build" ]; then mv build out;
           else echo "Nenhuma pasta de build encontrada" && exit 1; fi
@@ -45,7 +62,7 @@ jobs:
           personal_token: ${{ secrets.PAT_PAGES }}
           external_repository: LukasAlexandre/LukasAlexandre.github.io
           publish_branch: main
-          publish_dir: ./out
+          publish_dir: ${{ env.PROJECT_DIR }}/out
           cname: lukasdev.me
           user_name: "LukasAlexandre"
           user_email: "lukasalexandre@users.noreply.github.com"
