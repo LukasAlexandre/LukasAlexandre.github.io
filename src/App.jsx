@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Globe, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Code, Database, Wrench, MapPin, Phone, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
@@ -129,14 +129,14 @@ function App() {
         student: {
           title: 'Estudante de Engenharia de Software',
           company: 'Universidade',
-          period: '2025 - Atual',
-          description: 'Cursando Engenharia de Software com foco em desenvolvimento web e mobile. Participando de projetos de extensão e pesquisa.'
+          period: '2024 - Atual',
+          description: 'Cursando Engenharia de Software com foco em desenvolvimento de Projetos de Softwares, Arquiteturas, Tecnologias e Metodologias. Participando de projetos de extensão e pesquisas.'
         },
         selfTaught: {
           title: 'Desenvolvedor Autodidata(FreeLancer)',
           company: 'Estudos Independentes',
           period: '2025 - Atual',
-          description: 'Aprendizado contínuo através de cursos online, documentações e projetos práticos. Foco em tecnologias web modernas.'
+          description: 'Aprendizado contínuo através de cursos online, documentações e projetos práticos. Foco em Tecnologias/Bibliotecas modernas.'
         },
         earlyCareer: {
           title: 'Assistente de Engenharia de Produto',
@@ -150,7 +150,7 @@ function App() {
           company: 'Grupo Multi',
           period: 'Ago 2022 - Nov 2023',
           description:
-            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+            'Auxiliar de Engenharia de Teste atuando em prol de Setups, Manutenção preventivas e corretivas em linhas de Produção de smartphones, notebooks, multimídias, fontes, memórias e roteadores..',
         },
         monitor: {
           id: 4,
@@ -158,14 +158,14 @@ function App() {
           company: 'Grupo Multi',
           period: 'Mai 2024 - Mai 2025',
           description:
-            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+            'Gestor de operações em manufatura: aloco equipes por alta/baixa demanda, planejo materiais e procedimentos, opero SAP/SPM e orquestro tempo/processos (planos B/C). Resolvo problemas sob pressão, gerencio HC e metas e conduzo melhoria contínua.',
         },
         Auxiliar: {
           title: 'Auxiliar de Assistencia Técnica',
           company: 'Grupo Multi',
           period: 'Out 2021 -  Ago 2022',
           description:
-            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
+            'Assistente Técnico Especialista, Fazendo parte do Time AT Produção, atuei na assistência técnica exclusiva as linhas de produção da Multi | ZTE',
         }
       },
       contact: {
