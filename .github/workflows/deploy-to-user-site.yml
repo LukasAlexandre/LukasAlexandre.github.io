@@ -2,7 +2,8 @@ name: Deploy portfolio to user site
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -20,23 +21,22 @@ jobs:
           cache: npm
 
       - name: Install deps
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-      # Tente usar scripts padronizados; se não existirem, não falha.
-      - name: Build
-        run: npm run build || true
-      - name: Export (gera ./out)
-        run: npm run export:pages || true
+      - name: Build (tenta Next/Vite)
+        run: |
+          npm run build || true
+          npm run export || true
+          npm run export:pages || true
 
-      # Normaliza pasta de saída (usa out/; se não existir, tenta dist/ ou build/)
       - name: Normalize output dir
         run: |
           mkdir -p out
-          if [ -d "out" ]; then echo "out ok";
+          if [ -d "out" ]; then echo "using out/";
           elif [ -d "dist" ]; then mv dist out;
           elif [ -d "build" ]; then mv build out;
           else echo "Nenhuma pasta de build encontrada" && exit 1; fi
-          # SPA fallback (não falha se index não existir)
           [ -f out/404.html ] || cp out/index.html out/404.html || true
 
       - name: Deploy to LukasAlexandre.github.io (main)
