@@ -305,23 +305,23 @@ function App() {
   // Technologies data
   const technologies = {
     frontend: [
-      { name: 'HTML5', level: 50 },
-      { name: 'CSS3', level: 50 },
-      { name: 'JavaScript', level: 60 },
-      { name: 'React', level: 50 },
+      { name: 'HTML5', level: 80 },
+      { name: 'CSS3', level: 80 },
+      { name: 'JavaScript', level: 90 },
+      { name: 'React', level: 60 },
     ],
     backend: [
       { name: 'Node.js', level: 65 },
       { name: 'Express.js', level: 60 },
       { name: 'Prisma', level: 60 },
-      { name: 'C#', level: 50 },
+      { name: 'C#', level: 40 },
     ],
     tools: [
-      { name: 'Git/GitHub', level: 75 },
+      { name: 'Git/GitHub', level: 85 },
       { name: 'MySQL/SQL', level: 65 },
       { name: 'Prisma', level: 50 },
       { name: 'MongoDB', level: 50 },
-      { name: 'Vite', level: 60 }
+      { name: 'Vite', level: 70 }
     ]
   }
 
