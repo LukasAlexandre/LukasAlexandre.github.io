@@ -178,12 +178,78 @@
   .nav-link:hover::after {
     @apply w-full;
   }
+  
+  /* Rainbow hover effect */
+  .rainbow-hover {
+    /* Brighter pastel / neon style rainbow for better contrast in dark mode */
+    background: linear-gradient(90deg,
+      #ff5f5f,
+      #ffb347,
+      #ffe680,
+      #7dff85,
+      #5fd4ff,
+      #b59bff,
+      #ff7dff
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    background-size: 400% 100%;
+    transition: background-position 0.8s ease, filter 0.4s ease, text-shadow 0.4s ease;
+  }
+  .rainbow-hover:hover {
+    background-position: 100% 0;
+    filter: brightness(1.25) saturate(1.15);
+    text-shadow: 0 0 8px rgba(255,255,255,0.35), 0 0 14px rgba(255,255,255,0.25);
+  }
 }
+    /* StudyIn custom styles */
+    .custom-scroll { scrollbar-width: thin; scrollbar-color: hsl(var(--primary)) transparent; }
+    .custom-scroll::-webkit-scrollbar { height: 8px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg,var(--tw-gradient-stops)); border-radius: 9999px; }
+
+    @media (max-width: 640px) {
+      .custom-scroll::-webkit-scrollbar { display:none; }
+    }
 
 
 /* Custom font classes */
 .font-inter {
   font-family: 'Inter', sans-serif;
+}
+
+/* Animated Study background */
+.study-bg { position:relative; overflow:hidden; }
+.study-bg::before, .study-bg::after { content:""; position:absolute; inset:0; pointer-events:none; }
+/* Default subtle neutral */
+.study-bg::before { background:linear-gradient(120deg,#0a0d10,#0e1013); }
+.study-bg::after { background:radial-gradient(circle at 70% 80%,rgba(255,255,255,0.05),transparent 60%); }
+
+/* Per tech dark themes */
+.tech-bg-html { background:linear-gradient(160deg,#2b0b07,#55160f 55%,#2b0b07); }
+.tech-bg-css { background:linear-gradient(160deg,#031e33,#06365c 55%,#031e33); }
+.tech-bg-js { background:linear-gradient(160deg,#2d2402,#5a4705 55%,#2d2402); }
+.tech-bg-react { background:linear-gradient(160deg,#031d24,#06323d 55%,#031d24); }
+.tech-bg-node { background:linear-gradient(160deg,#031d14,#063d2a 55%,#031d14); }
+.tech-bg-prisma { background:linear-gradient(160deg,#2a0433,#4d0a60 55%,#2a0433); }
+.tech-bg-mysql { background:linear-gradient(160deg,#0d1233,#1c2670 55%,#0d1233); }
+.tech-bg-ia { background:linear-gradient(160deg,#330414,#600a2a 55%,#330414); }
+
+/* Light variants */
+:root:not(.dark) .tech-bg-html { background:linear-gradient(160deg,#fff1ed,#ffd5cc 60%,#fff1ed); }
+:root:not(.dark) .tech-bg-css { background:linear-gradient(160deg,#edf6ff,#d5eaff 60%,#edf6ff); }
+:root:not(.dark) .tech-bg-js { background:linear-gradient(160deg,#fff9e5,#ffedaf 60%,#fff9e5); }
+:root:not(.dark) .tech-bg-react { background:linear-gradient(160deg,#e6fbff,#c9f4ff 60%,#e6fbff); }
+:root:not(.dark) .tech-bg-node { background:linear-gradient(160deg,#e8fff5,#c9fbe6 60%,#e8fff5); }
+:root:not(.dark) .tech-bg-prisma { background:linear-gradient(160deg,#fceeff,#f3d7ff 60%,#fceeff); }
+:root:not(.dark) .tech-bg-mysql { background:linear-gradient(160deg,#eef2ff,#dfe7ff 60%,#eef2ff); }
+:root:not(.dark) .tech-bg-ia { background:linear-gradient(160deg,#ffe8f1,#ffd0e3 60%,#ffe8f1); }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .study-bg::before,.study-bg::after { animation:none; }
 }
 
 .font-mono {

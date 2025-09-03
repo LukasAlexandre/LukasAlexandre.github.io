@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion , AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Globe, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Code, Database, Wrench, MapPin, Phone, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
@@ -7,6 +7,9 @@ import { Badge } from '@/components/ui/badge.jsx'
 import { Input } from '@/components/ui/input.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
 import './App.css'
+import { translations } from '@/lib/i18n.js'
+import { buildProjects } from '@/data/projects.js'
+import Header from '@/components/Header.jsx'
 
 // Assets imports
 import profileImage from './100711785.jpeg'
@@ -18,9 +21,8 @@ import optimus01 from './assets/images/optimus.png'
 import alurabooks01 from './assets/images/books.png'
 
 function App() {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(false) // retained for backward compat (some sections use isDark)
   const [language, setLanguage] = useState('pt')
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 
   // Load theme and language from localStorage
@@ -38,269 +40,14 @@ function App() {
     }
   }, [])
 
-  // Toggle theme
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    if (!isDark) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-    }
-  }
-
-  // Toggle language
-  const toggleLanguage = () => {
-    const newLang = language === 'pt' ? 'en' : 'pt'
-    setLanguage(newLang)
-    localStorage.setItem('language', newLang)
-  }
-
-  // Scroll to section
+  // Scroll utility still used inside sections
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-    setIsMenuOpen(false)
+    element?.scrollIntoView({ behavior: 'smooth' })
   }
 
   // Translations
-  const t = {
-    pt: {
-      nav: {
-        home: 'Início',
-        about: 'Sobre',
-        skills: 'Tecnologias',
-        projects: 'Projetos',
-        experience: 'Experiência',
-        contact: 'Contato'
-      },
-      hero: {
-        greeting: 'Olá, eu sou',
-        name: 'Lukas Alexandre',
-        title: 'Desenvolvedor FullStack',
-        description: 'Apaixonado por criar experiências digitais incríveis e soluções inovadoras',
-        cta: 'Vamos conversar'
-      },
-      about: {
-        title: 'Sobre Mim',
-        subtitle: 'Minha jornada na programação',
-        text1: 'Sou estudante de Engenharia de Software e desenvolvedor FullStack autodidata, apaixonado por criar experiências incríveis e envolventes para os usuários. Estou sempre buscando aperfeiçoar minhas habilidades e aprender novas tecnologias.',
-        text2: 'Minha paixão por computadores começou cedo, mas foi em 2022 que conheci a programação, apresentado por um amigo de trabalho. Motivado por ele, iniciei meus estudos em algoritmos e lógica de programação, e desde então, não consigo mais parar.',
-        text3: 'Atualmente adiquiro conhecimento em front-end, ao mesmo tempo em que estudo back-end em paralelo. Estou constantemente buscando novas oportunidades para aplicar meus conhecimentos e contribuir para projetos desafiadores.',
-        experience: 'Experiência',
-        projects: 'Projetos',
-        technologies: 'Tecnologias'
-      },
-      skills: {
-        title: 'Tecnologias',
-        subtitle: 'Ferramentas que uso para criar soluções',
-        frontend: 'Frontend',
-        backend: 'Backend',
-        tools: 'Ferramentas'
-      },
-      projects: {
-        title: 'Projetos',
-        subtitle: 'Alguns dos meus trabalhos recentes',
-        viewCode: 'Ver Código',
-        viewLive: 'Ver Projeto',
-        thamis: {
-          title: 'Thamis Cake',
-          description: 'Site de confeitaria especializado em bolos artesanais. Desenvolvido como projeto de extensão universitária para ajudar a comunidade local.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        },
-        fokus: {
-          title: 'Fokus',
-          description: 'Aplicação de produtividade baseada na técnica Pomodoro. Ajuda usuários a manter o foco durante estudos e trabalho.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        },
-        aluraDev: {
-          title: 'Alura Dev',
-          description: 'Plataforma para compartilhamento de código com syntax highlighting. Permite aos desenvolvedores compartilhar snippets de código.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        }
-      },
-      experience: {
-        title: 'Experiência',
-        subtitle: 'Minha trajetória profissional',
-        current: 'Atual',
-        student: {
-          title: 'Estudante de Engenharia de Software',
-          company: 'Universidade',
-          period: '2024 - Atual',
-          description: 'Cursando Engenharia de Software com foco em desenvolvimento de Projetos de Softwares, Arquiteturas, Tecnologias e Metodologias. Participando de projetos de extensão e pesquisas.'
-        },
-        selfTaught: {
-          title: 'Desenvolvedor Autodidata(FreeLancer)',
-          company: 'Estudos Independentes',
-          period: '2025 - Atual',
-          description: 'Aprendizado contínuo através de cursos online, documentações e projetos práticos. Foco em Tecnologias/Bibliotecas modernas.'
-        },
-        earlyCareer: {
-          title: 'Assistente de Engenharia de Produto',
-          company: 'Grupo Multi',
-          period: 'Mai 2025 - Atual',
-          description:
-            'Atua na validação de software e imagens em ambiente de produção. Responsável pela conformidade técnica, suporte aos times de engenharia e qualidade em processos de homologação, testes funcionais e introdução de novos produtos (NPIs).',
-        },
-        teste: {
-          title: 'Auxiliar de Engenharia de Testes', // link Testes',
-          company: 'Grupo Multi',
-          period: 'Ago 2022 - Nov 2023',
-          description:
-            'Auxiliar de Engenharia de Teste atuando em prol de Setups, Manutenção preventivas e corretivas em linhas de Produção de smartphones, notebooks, multimídias, fontes, memórias e roteadores..',
-        },
-        monitor: {
-          id: 4,
-          title: 'Monitor de Manufatura',
-          company: 'Grupo Multi',
-          period: 'Mai 2024 - Mai 2025',
-          description:
-            'Gestor de operações em manufatura: aloco equipes por alta/baixa demanda, planejo materiais e procedimentos, opero SAP/SPM e orquestro tempo/processos (planos B/C). Resolvo problemas sob pressão, gerencio HC e metas e conduzo melhoria contínua.',
-        },
-        Auxiliar: {
-          title: 'Auxiliar de Assistencia Técnica',
-          company: 'Grupo Multi',
-          period: 'Out 2021 -  Ago 2022',
-          description:
-            'Assistente Técnico Especialista, Fazendo parte do Time AT Produção, atuei na assistência técnica exclusiva as linhas de produção da Multi | ZTE',
-        }
-      },
-      contact: {
-        title: 'Contato',
-        subtitle: 'Vamos trabalhar juntos',
-        name: 'Nome',
-        email: 'Email',
-        message: 'Mensagem',
-        send: 'Enviar Mensagem',
-        info: {
-          email: 'larosa2019@hotmail.com',
-          location: 'Brasil',
-          availability: 'Disponível para projetos'
-        }
-      }
-    },
-    en: {
-      nav: {
-        home: 'Home',
-        about: 'About',
-        skills: 'Skills',
-        projects: 'Projects',
-        experience: 'Experience',
-        contact: 'Contact'
-      },
-      hero: {
-        greeting: 'Hello, I am',
-        name: 'Lukas Alexandre',
-        title: 'FullStack Developer',
-        description: 'Passionate about creating amazing digital experiences and innovative solutions',
-        cta: 'Let\'s talk'
-      },
-      about: {
-        title: 'About Me',
-        subtitle: 'My programming journey',
-        text1: 'I am a Software Engineering student and self-taught FullStack developer, passionate about creating incredible and engaging user experiences. I am always looking to improve my skills and learn new technologies.',
-        text2: 'My passion for computers started early, but it was in 2022 that I discovered programming, introduced by a work colleague. Motivated by him, I started studying algorithms and programming logic, and since then, I can\'t stop.',
-        text3: 'Currently I specialize in front-end, while studying back-end in parallel. I am constantly seeking new opportunities to apply my knowledge and contribute to challenging projects.',
-        experience: 'Years of experience',
-        projects: 'Completed projects',
-        technologies: 'Technologies mastered'
-      },
-      skills: {
-        title: 'Technologies',
-        subtitle: 'Tools I use to create solutions',
-        frontend: 'Frontend',
-        backend: 'Backend',
-        tools: 'Tools'
-      },
-      projects: {
-        title: 'Projects',
-        subtitle: 'Some of my recent work',
-        viewCode: 'View Code',
-        viewLive: 'View Project',
-        thamis: {
-          title: 'Thamis Cake',
-          description: 'Bakery website specialized in handcrafted cakes. Developed as a university extension project to help the local community.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        },
-        fokus: {
-          title: 'Fokus',
-          description: 'Productivity application based on the Pomodoro technique. Helps users maintain focus during studies and work.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        },
-        aluraDev: {
-          title: 'Alura Dev',
-          description: 'Code sharing platform with syntax highlighting. Allows developers to share code snippets.',
-          tech: ['HTML', 'CSS', 'JavaScript']
-        }
-      },
-      experience: {
-  title: 'Experience',
-  subtitle: 'My professional journey',
-  current: 'Current',
-  student: {
-    title: 'Software Engineering Student',
-    company: 'University',
-    period: '2022 - Current',
-    description:
-      'Studying Software Engineering with a focus on web and mobile development. Participating in extension and research projects.'
-  },
-  selfTaught: {
-    title: 'Self-taught Developer (Freelancer)',
-    company: 'Independent Studies',
-    period: '2022 - Current',
-    description:
-      'Continuous learning through online courses, documentation, and hands-on projects. Focused on modern web technologies.'
-  },
-  earlyCareer: {
-    title: 'Product Engineering Assistant',
-    company: 'Grupo Multi',
-    period: 'May 2025 - Current',
-    description:
-      'Working on software and image validation in production environments. Ensuring technical compliance, supporting engineering and quality teams in homologation, functional testing, and introduction of new products (NPIs).'
-  },
-  teste: {
-    title: 'Test Engineering Assistant',
-    company: 'Grupo Multi',
-    period: 'Aug 2022 - Nov 2023',
-    description:
-      'Worked in test setups, preventive and corrective maintenance on production lines of smartphones, notebooks, multimedia, and network equipment. Supported engineering and quality processes.'
-  },
-  monitor: {
-    id: 4,
-    title: 'Manufacturing Monitor',
-    company: 'Grupo Multi',
-    period: 'May 2024 - May 2025',
-    description:
-      'Managed teams and production demands using SAP and SPM systems. Ensured compliance with production goals, procedures, and inventory planning.'
-  },
-  Auxiliar: {
-    title: 'Technical Support Assistant',
-    company: 'Grupo Multi',
-    period: 'Oct 2021 - Aug 2022',
-    description:
-      'Provided technical support in the production lines, diagnosing and solving issues in smartphones and notebooks. Acted in exclusive assistance for final product quality.'
-  }
-      },
-      contact: {
-        title: 'Contact',
-        subtitle: 'Let\'s work together',
-        name: 'Name',
-        email: 'Email',
-        message: 'Message',
-        send: 'Send Message',
-        info: {
-          email: 'larosa2019@hotmail.com',
-          location: 'Brazil',
-          availability: 'Available for projects'
-        }
-      }
-    }
-  }
-
-  const currentLang = t[language]
+  const currentLang = translations[language]
 
   // Technologies data
   const technologies = {
@@ -325,147 +72,10 @@ function App() {
     ]
   }
 
-  const projects = [
-    {
-      id: 1,
-      title: currentLang.projects.thamis.title,
-      description: currentLang.projects.thamis.description,
-      image: thamis01,
-      technologies: currentLang.projects.thamis.tech,
-      github: 'https://github.com/LukasAlexandre/Thamis-cake',
-      live: 'https://thamis-cake-toyl-jjo22c952-lukas-projects-72e77d7d.vercel.app/index.html',
-    },
-    {
-      id: 2,
-      title: currentLang.projects.fokus.title,
-      description: currentLang.projects.fokus.description,
-      image: fokus01,
-      technologies: currentLang.projects.fokus.tech,
-      github: 'https://github.com/LukasAlexandre/Fokus',
-      live: 'https://fokus-b2prbbs8e-lukas-projects-72e77d7d.vercel.app/',
-    },
-    {
-      id: 3,
-      title: currentLang.projects.aluraDev.title,
-      description: currentLang.projects.aluraDev.description,
-      image: aluraDev01,
-      technologies: currentLang.projects.aluraDev.tech,
-      github: 'https://github.com/LukasAlexandre/Challenge-Front-end-First-Edition',
-      live: 'https://challenge-front-end-first-edition-2jt0ji5k5.vercel.app/',
-    },
-    {
-      id: 4,
-      title: 'Imobiliária Davi',
-      description: 'Sistema completo para gestão de imóveis com frontend em React, backend com Node.js e banco de dados MySQL via Prisma. Projeto robusto, desenvolvido para uma imobiliária real.',
-      image: davi01,
-      technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'Prisma', 'MySQL', 'HTML', 'CSS'],
-      github: '',
-      live: 'https://front-8gckb436q-lukas-projects-72e77d7d.vercel.app/',
-    },
-    {
-      id: 5,
-      title: 'Optimus Tech',
-      description: 'Landing page institucional responsiva para uma agência fictícia do setor de tecnologia. Criada com HTML semântico e estilização moderna em CSS puro.',
-      image: optimus01,
-      technologies: ['HTML', 'CSS'],
-      github: 'https://github.com/LukasAlexandre/7-Days-of-Code-HTML-e-CSS-Optimus-Tech',
-      live: 'https://optimus-tech-egh1tr6ca-lukas-projects-72e77d7d.vercel.app/',
-    },
-    {
-      id: 6,
-      title: 'Alura Books',
-      description: 'Interface de uma livraria digital com foco em livros de tecnologia. Projeto realizado como desafio da plataforma Alura, aplicando conceitos de layout e responsividade.',
-      image: alurabooks01,
-      technologies: ['HTML', 'CSS'],
-      github: 'https://github.com/LukasAlexandre/Alurabooks',
-      live: 'https://alurabooks-green-delta.vercel.app/',
-    }
-  ]
+  const projects = useMemo(() => buildProjects(currentLang), [currentLang])
   return (
     <div className="min-h-screen bg-background text-foreground font-inter">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="font-bold text-xl gradient-text"
-            >
-              Lukas
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {Object.entries(currentLang.nav).map(([key, value]) => (
-                <button
-                  key={key}
-                  onClick={() => scrollToSection(key)}
-                  className="nav-link text-sm font-medium hover:text-emerald-400"
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
-
-            {/* Theme and Language toggles */}
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleTheme}
-                className="p-2"
-              >
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleLanguage}
-                className="p-2"
-              >
-                <Globe className="h-4 w-4" />
-                <span className="ml-1 text-xs">{language.toUpperCase()}</span>
-              </Button>
-
-              {/* Mobile menu button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2"
-              >
-                {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-background border-t border-border"
-            >
-              <div className="px-4 py-2 space-y-2">
-                {Object.entries(currentLang.nav).map(([key, value]) => (
-                  <button
-                    key={key}
-                    onClick={() => scrollToSection(key)}
-                    className="block w-full text-left px-3 py-2 text-sm font-medium hover:text-emerald-400 hover:bg-muted rounded-md"
-                  >
-                    {value}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+  <Header language={language} setLanguage={setLanguage} />
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center hero-bg">
