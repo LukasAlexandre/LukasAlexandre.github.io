@@ -1,0 +1,68 @@
+/* Tema escuro refinado para a Home do StudyIn */
+:root {
+  --home-bg: linear-gradient(145deg,#161b22 0%, #0f141b 55%, #0b1016 100%);
+  --home-panel: rgba(22,27,34,0.72);
+  --home-panel-border: rgba(255,255,255,0.06);
+  --home-panel-glow: 180 100% 60% / 0.18;
+  --home-accent: #ff8a4d;
+  --home-accent-2: #ff4fa0;
+  --home-text: #f1f5f9;
+  --home-text-soft: #94a3b8;
+}
+
+.home-theme {
+  background: var(--home-panel);
+  color: var(--home-text);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 28px -4px rgba(0,0,0,0.55), 0 0 0 1px var(--home-panel-border), 0 0 0 1px hsl(var(--home-panel-glow));
+  padding: 3.25rem 2rem 2.5rem 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  isolation: isolate;
+}
+
+/* Halo / vinheta sutil dentro do card */
+.home-theme::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgba(255,255,255,0.08), transparent 70%),
+    radial-gradient(700px 480px at 50% 120%, rgba(255,255,255,0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-gradient-html-accent {
+  background: linear-gradient(90deg, var(--home-accent), var(--home-accent-2));
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 4px 18px -4px rgba(255,120,80,0.55);
+}
+
+.text-html-accent { color: var(--home-accent); }
+.text-html-text-soft { color: var(--home-text-soft); }
+
+.home-theme h1 {
+  background: linear-gradient(90deg, var(--home-accent) 0%, var(--home-accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  letter-spacing: .5px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-theme p { position: relative; z-index: 1; }
+.home-theme .inline-flex { position: relative; z-index: 2; }
+
+@media (max-width: 600px) {
+  .home-theme {
+    padding: 2.5rem 1rem 2rem 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}

@@ -9,6 +9,7 @@ import PrismaPage from '@/study/prisma/index.jsx'
 import MysqlPage from '@/study/mysql/index.jsx'
 import IaPage from '@/study/ia/index.jsx'
 import { Navigate, Routes, Route } from 'react-router-dom'
+import HomePage from './study/home/HomePage.jsx'
 import { technologies } from '@/study/techData.js'
 
 // Acts as the parent routing element for nested technology pages
@@ -17,7 +18,7 @@ export default function StudyIn({ language='pt', setLanguage }) {
   return (
     <Routes>
       <Route element={<StudyLayout language={language} setLanguage={setLanguage} />}>        
-        <Route index element={<Navigate to={first} replace />} />
+  <Route index element={<HomePage />} />
         {technologies.map(t => {
           let element
           switch(t.slug){
@@ -33,7 +34,7 @@ export default function StudyIn({ language='pt', setLanguage }) {
           }
           return <Route key={t.slug} path={t.slug} element={element} />
         })}
-        <Route path="*" element={<Navigate to={first} replace />} />
+  {/* Removed fallback route to avoid double rendering */}
       </Route>
     </Routes>
   )

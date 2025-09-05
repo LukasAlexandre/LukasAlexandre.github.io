@@ -1,29 +1,34 @@
 /* HTML Study Theme (scoped) */
 .html-theme { 
-	--html-bg:hsl(350 100% 14%);
-	--html-bg-alt:hsl(350 85% 19%);
-	--html-accent:hsl(351 65% 57%);
-	--html-accent-warm:hsl(12 100% 65%);
+	--html-bg:hsl(350 100% 10%);
+	--html-bg-alt:hsl(350 90% 16%);
+	--html-accent:hsl(351 75% 58%);
+	--html-accent-warm:hsl(18 100% 60%);
 	--html-accent-soft:hsl(25 100% 67%);
 	--html-text:hsl(0 0% 100%);
-	--html-text-soft:hsl(351 100% 90%);
-	--html-code-bg:hsl(350 70% 10% / .85);
-	--html-border:hsla(25 100% 67% / 0.18);
-	--html-border-strong:hsla(25 100% 67% / 0.5);
+	--html-text-soft:hsl(12 90% 88%);
+	--html-code-bg:hsl(350 75% 8% / .85);
+	--html-border:hsla(18 100% 60% / 0.22);
+	--html-border-strong:hsla(18 100% 60% / 0.55);
 	position: relative;
 	color: var(--html-text);
+	min-height:100vh;
+	width:100%;
+	padding:0; margin:0;
+	overflow-x:hidden;
 	background:
-		radial-gradient(at 20% 25%, hsl(350 70% 20%) 0%, transparent 55%),
-		radial-gradient(at 80% 60%, hsl(351 60% 22%) 0%, transparent 60%),
-		linear-gradient(140deg, var(--html-bg), var(--html-bg-alt) 65%);
+		radial-gradient(circle at 15% 20%, hsl(350 85% 22% / .8) 0%, transparent 60%),
+		radial-gradient(circle at 85% 70%, hsl(355 70% 25% / .75) 0%, transparent 65%),
+		linear-gradient(135deg, var(--html-bg) 0%, var(--html-bg-alt) 65%, hsl(350 75% 22%) 100%);
 }
 
 .html-theme::before { /* subtle noise / overlay */
 	content: "";
-	position: absolute; inset:0; pointer-events:none; z-index:0; opacity:.35;
+	position: absolute; inset:0; pointer-events:none; z-index:0; opacity:.45;
 	background:
-		repeating-linear-gradient(45deg, #ffffff08 0 2px, transparent 2px 4px),
-		radial-gradient(circle at 30% 70%, #ff9b5410, transparent 60%);
+		repeating-linear-gradient(45deg, #ffffff07 0 2px, transparent 2px 4px),
+		radial-gradient(circle at 30% 70%, #ff854010, transparent 62%),
+		radial-gradient(circle at 70% 30%, #ff4d4012, transparent 65%);
 	mix-blend-mode: overlay;
 }
 

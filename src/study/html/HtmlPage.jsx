@@ -1,223 +1,272 @@
-import { motion } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Book, Code, Layers, FileText, Globe, Zap, Shield, Search, Smartphone, Copy, Check } from "lucide-react"
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Code, Database, FileText, Globe, Image, Play, Edit, Shield, Search, Smartphone, Copy, Check, ChevronUp, Eye, CheckCircle, ArrowRight, Download, Link, Table, Zap, Languages, Wrench, Target, Trophy, Mail, Book, X, Layers } from 'lucide-react'
 import './html.css'
 
-export default function HtmlPage() {
+// Seções ampliadas (adaptadas para paleta vermelha existente)
+const sections = [
+  { id:'base', title:'1. Base', icon:<Database className="w-4 h-4"/>, topics:['DOM','Elemento / Atributo','Conteúdo','Fluxos','Árvore / Nós'] },
+  { id:'documento', title:'2. Documento', icon:<FileText className="w-4 h-4"/>, topics:['<!doctype html>','<html lang>','<head> metas','title / description','Landmarks','1× <main>'] },
+  { id:'semantica', title:'3. Semântica', icon:<Globe className="w-4 h-4"/>, topics:['header/nav/main','section/article','aside/footer','h1–h6','figure + figcaption','time datetime'] },
+  { id:'texto', title:'4. Texto', icon:<FileText className="w-4 h-4"/>, topics:['p','strong / em','q / blockquote','cite / abbr','code / pre','mark'] },
+  { id:'links-nav', title:'5. Links & Nav', icon:<Link className="w-4 h-4"/>, topics:['<a href>','_blank + rel="noopener"','Skip link','Foco visível','Breadcrumbs'] },
+  { id:'imagens', title:'6. Imagens', icon:<Image className="w-4 h-4"/>, topics:['alt útil','width / height','srcset / sizes','<picture>','loading="lazy"'] },
+  { id:'midia', title:'7. Mídia', icon:<Play className="w-4 h-4"/>, topics:['<audio>/<video>','controls','<track> legendas','poster','preload="none"'] },
+  { id:'formularios', title:'8. Formulários', icon:<Edit className="w-4 h-4"/>, topics:['label for','Tipos nativos','required / min / max','pattern / inputmode','autocomplete','fieldset / legend'] },
+  { id:'tabelas', title:'9. Tabelas', icon:<Table className="w-4 h-4"/>, topics:['caption','thead / tbody / tfoot','th scope','headers/id (complexas)'] },
+  { id:'a11y', title:'10. A11y & ARIA', icon:<Shield className="w-4 h-4"/>, topics:['Semântica > ARIA','Landmarks','aria-expanded','aria-live','aria-current','tabindex'] },
+  { id:'metadados', title:'11. Metadados', icon:<FileText className="w-4 h-4"/>, topics:['charset','viewport','Favicon','Open Graph / Twitter','canonical','meta robots'] },
+  { id:'performance', title:'12. Performance', icon:<Zap className="w-4 h-4"/>, topics:['preload','preconnect','lazy images','defer JS','cache headers'] },
+  { id:'seo', title:'13. SEO', icon:<Search className="w-4 h-4"/>, topics:['h1 único','Headings coerentes','title/description','Links internos','Conteúdo útil','JSON-LD'] },
+  { id:'seguranca', title:'14. Segurança', icon:<Shield className="w-4 h-4"/>, topics:['noopener noreferrer','referrerpolicy','download','nofollow ugc','Sanitização'] },
+  { id:'i18n', title:'15. i18n', icon:<Languages className="w-4 h-4"/>, topics:['lang por trecho','dir="rtl"','hreflang','Encoding correto'] },
+  { id:'jsonld', title:'16. JSON-LD', icon:<Code className="w-4 h-4"/>, topics:['BreadcrumbList','Article / Product','Organization / WebSite','FAQPage'] },
+  { id:'pwa', title:'17. PWA', icon:<Smartphone className="w-4 h-4"/>, topics:['manifest','theme-color','Ícones','Service Worker','Offline básico'] },
+  { id:'email', title:'18. HTML Email', icon:<Mail className="w-4 h-4"/>, topics:['Layout tabelas','CSS inline','Largura 600px','Fallbacks','alt adequado'] },
+  { id:'checklist', title:'19. Checklist', icon:<CheckCircle className="w-4 h-4"/>, topics:['lang + main','Headings ok','Imagens alt+dim','Links externos seguros','Form label+autocomplete','Resource hints'] },
+  { id:'ferramentas', title:'20. Ferramentas', icon:<Wrench className="w-4 h-4"/>, topics:['Validator','Lighthouse','axe DevTools','NVDA/VoiceOver','Coverage/Network'] },
+  { id:'katas', title:'21. Katas', icon:<Target className="w-4 h-4"/>, topics:['Blog semântico','Menu acessível','Checkout nativo','Tabela financeira','Hero srcset','Página pt-BR/en','OG/Twitter debug','Preload fontes'] }
+]
+
+export default function HtmlPage(){
+  const [active,setActive] = useState('')
+  const [done,setDone] = useState(new Set())
+  const [showTop,setShowTop] = useState(false)
+  const [showSide,setShowSide] = useState(false)
+  const [mini,setMini] = useState(false)
+
+  useEffect(()=>{
+    const onScroll=()=>{
+      const y = window.scrollY
+      setShowTop(y>400)
+      setShowSide(y>320)
+      const els = sections.map(s=>document.getElementById(s.id)).filter(Boolean)
+      const current = els.find(el=>{ const r = el.getBoundingClientRect(); return r.top<=110 && r.bottom>=110 })
+      if(current) setActive(current.id)
+    }
+    window.addEventListener('scroll',onScroll)
+    return ()=>window.removeEventListener('scroll',onScroll)
+  },[])
+
+  const mark = id => setDone(prev=> new Set([...prev,id]))
+  const progress = (done.size/sections.length)*100
+
   return (
-    <div className="html-theme min-h-screen">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <Hero />
-        <ReferenceCard />
-        <StructureSection />
-        <Divider />
-        <SemanticSection />
-        <Divider />
-        <ElementsSection />
-        <Divider />
-        <AttributesSection />
-        <Divider />
-        <FormsSection />
-        <Divider />
-        <MediaSection />
-        <Divider />
-        <AccessibilitySection />
-        <Divider />
-        <SeoSection />
-        <Divider />
-        <ResponsiveSection />
-        <Divider />
-        <BestPractices />
-        <Divider />
-        <ModernHtmlSection />
-      </div>
+    <div className="relative max-w-6xl mx-auto px-6 md:px-10 py-10 pt-14">
+      <Hero progress={progress} count={`${done.size}/${sections.length}`}/>
+      {showSide && <SideNav sections={sections} active={active} done={done} />}
+      {sections.map((s,i)=>(
+        <React.Fragment key={s.id}>
+          <SectionBlock section={s} index={i} complete={()=>mark(s.id)} completed={done.has(s.id)} />
+          {i<sections.length-1 && <Divider />}
+        </React.Fragment>
+      ))}
+      {done.size===sections.length && <Certificate />}
+      <Floating showTop={showTop} onTop={()=>window.scrollTo({top:0,behavior:'smooth'})} toggleMini={()=>setMini(m=>!m)} />
+      <MiniProgress show={mini} onClose={()=>setMini(false)} sections={sections} done={done} progress={progress} />
     </div>
   )
 }
 
-function Hero() {
+function Hero({progress,count}){
   return (
-    <motion.section 
-      className="pt-16 pb-10 text-center"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="inline-flex items-center bg-gradient-html-accent text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-        <Code className="w-3 h-3 mr-2" />
-        HTML5 Completo
+    <motion.section className="text-center py-14" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.6}}>
+      <div className="inline-flex items-center bg-gradient-html-accent text-white text-[11px] font-semibold px-4 py-2 rounded-full mb-6 tracking-wide uppercase shadow-lg">
+        <Trophy className="w-4 h-4 mr-2"/> HTML5 Mastery
       </div>
-  <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-5 font-mono">
-        HTML - Guia Completo
-      </h1>
-  <p className="text-html-text-soft text-sm md:text-base max-w-3xl mx-auto leading-relaxed mb-7">
-        HyperText Markup Language - A linguagem padrão para criar e estruturar páginas da web. 
-        Descubra tudo sobre elementos, semântica, acessibilidade, SEO e as melhores práticas modernas.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <Button variant="html" size="lg">
-          <Book className="w-4 h-4" />
-          Começar Estudos
+      <h1 className="text-4xl md:text-6xl font-bold mb-5 font-mono gradient-title">Guia HTML Completo</h1>
+      <p className="text-html-text-soft text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-7">Da base à prática moderna. Estrutura, semântica, acessibilidade, performance e SEO – tudo em um só lugar.</p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+        <Button size="lg" className="bg-gradient-html-accent text-white" onClick={()=>document.getElementById('base')?.scrollIntoView({behavior:'smooth'})}>
+          <Play className="w-5 h-5 mr-2"/> Começar
         </Button>
-        <Button variant="html" size="lg">
-          <ExternalLink className="w-4 h-4" />
-          Documentação MDN
+        <Button variant="outline" size="lg" className="border-html-border text-html-accent hover:bg-html-code-bg">
+          <Download className="w-5 h-5 mr-2"/> PDF
         </Button>
+      </div>
+      <div className="mx-auto max-w-md">
+        <div className="w-full h-2 bg-html-code-bg rounded-full overflow-hidden border border-html-border mb-2">
+          <motion.div className="h-full bg-gradient-to-r from-orange-500 to-amber-400" initial={{width:0}} animate={{width:`${progress}%`}} transition={{duration:.6}}/>
+        </div>
+        <span className="text-[11px] text-html-text-soft">{Math.round(progress)}% • {count}</span>
       </div>
     </motion.section>
   )
 }
 
-function ReferenceCard() {
+function SideNav({sections,active,done}){
   return (
-    <motion.div 
-      className="bg-gradient-html rounded-xl p-6 md:p-8 mb-12 border border-html-border shadow-xl"
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
-      <h2 className="text-xl font-semibold mb-3 text-html-text">Referências de Estudo</h2>
-      <p className="text-xs md:text-sm leading-relaxed mb-4 text-html-text-soft">
-        Todos os conceitos explicados nesta página estão baseados nas especificações oficiais do W3C e melhores práticas da comunidade. 
-        Acesse nossa planilha completa de estudos para acompanhar seu progresso.
-      </p>
-      <div className="flex flex-wrap gap-3">
-        <Button variant="html">
-          <FileText className="w-4 h-4" />
-          Planilha de Estudos
-        </Button>
-        <Button variant="html">
-          <ExternalLink className="w-4 h-4" />
-          Especificação W3C
-        </Button>
+    <motion.aside initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} className="hidden xl:block fixed left-6 top-1/2 -translate-y-1/2 z-40 w-64">
+      <div className="bg-html-code-bg/90 backdrop-blur-xl rounded-xl p-5 border border-html-border max-h-[75vh] overflow-y-auto space-y-1 shadow-lg">
+        <h3 className="font-semibold text-html-text-soft text-xs tracking-wide uppercase mb-3 flex items-center gap-2"><Book className="w-3 h-3"/> Seções</h3>
+        {sections.map(s=> (
+          <button key={s.id} onClick={()=>document.getElementById(s.id)?.scrollIntoView({behavior:'smooth'})} className={`group flex items-center gap-3 w-full p-2.5 rounded-lg text-left text-[13px] transition-all ${active===s.id? 'bg-html-code-bg text-html-accent shadow-lg':'text-html-text-soft hover:bg-html-code-bg/60 hover:text-html-text'}`}>
+            <span className="text-html-accent">{s.icon}</span>
+            <span className="flex-1">{s.title}</span>
+            {done.has(s.id)? <CheckCircle className="w-4 h-4 text-orange-400"/> : <div className="w-4 h-4 border border-html-border rounded-full opacity-30"/>}
+            <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"/>
+          </button>
+        ))}
+      </div>
+    </motion.aside>
+  )
+}
+
+function SectionBlock({section,index,complete,completed}){
+  const [show,setShow] = useState(false)
+  const [exampleIndex,setExampleIndex] = useState(0)
+  return (
+    <motion.section id={section.id} className="py-14" initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true, margin:'-120px'}} transition={{duration:.55, delay:index*0.04}}>
+      <div className="flex items-center mb-8">
+        <div className="mr-4 p-3 rounded-xl bg-html-code-bg text-html-accent">{section.icon}</div>
+        <div className="flex-1">
+          <h2 className="text-3xl font-bold gradient-title mb-2">{section.title}</h2>
+          <div className="flex flex-wrap gap-2">
+            {section.topics.slice(0,3).map((t,i)=>(<span key={i} className="text-[11px] tracking-wide px-3 py-1 rounded-full bg-html-code-bg text-html-text-soft">{t}</span>))}
+            {section.topics.length>3 && <span className="text-[11px] text-html-text-soft">+{section.topics.length-3} more</span>}
+          </div>
+        </div>
+        <button onClick={complete} className={`p-3 rounded-xl transition-all ${completed? 'bg-orange-500 text-white shadow-lg':'bg-html-code-bg border border-html-border text-html-text-soft hover:text-html-text'}`} aria-label="Concluir seção">
+          <CheckCircle className="w-5 h-5"/>
+        </button>
+      </div>
+      <div className="grid lg:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <h3 className="text-sm font-semibold tracking-wide text-html-text-soft uppercase">Conceitos</h3>
+          {section.topics.map((topic,i)=>(
+            <motion.div key={i} className="flex items-center gap-3 p-4 bg-html-code-bg rounded-lg border border-html-border hover:border-html-accent/40 transition-all cursor-pointer group" whileHover={{scale:1.02}} onClick={()=>setExampleIndex(i)}>
+              <div className="w-2 h-2 rounded-full bg-orange-400"/>
+              <span className="text-html-text group-hover:text-orange-300 text-sm">{topic}</span>
+              <ArrowRight className="w-4 h-4 text-html-text-soft ml-auto opacity-0 group-hover:opacity-100 transition-opacity"/>
+            </motion.div>
+          ))}
+        </div>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold tracking-wide text-html-text-soft uppercase">Exemplo</h3>
+            <Button variant="outline" size="sm" onClick={()=>setShow(s=>!s)} className="border-html-border text-html-accent hover:bg-html-code-bg">
+              <Eye className="w-4 h-4 mr-2"/> {show? 'Ocultar':'Ver'} Código
+            </Button>
+          </div>
+          <Example section={section} index={exampleIndex} show={show} />
+        </div>
+      </div>
+    </motion.section>
+  )
+}
+
+function Example({section,index,show}){
+  const [copied,setCopied] = useState(false)
+  const examples = {
+    base:['<!DOCTYPE html>\n<html lang="pt-BR">...</html>','<img src="img.jpg" alt="Descrição" loading="lazy"/>'],
+    documento:['<head>\n  <meta charset="UTF-8">...','<title>Página</title>'],
+    semantica:['<header>...</header>','<section><article>...</article></section>'],
+    imagens:['<img src="hero.jpg" alt="Hero" width="800" height="400"/>','<picture>...</picture>'],
+    performance:['<link rel="preload" as="font" href="font.woff2" crossorigin>', '<script src="app.js" defer></script>']
+  }
+  const code = (examples[section.id]||['// Exemplo em breve'])[index] || (examples[section.id]||['// Exemplo'])[0]
+  const copy=()=>{navigator.clipboard.writeText(code).then(()=>{setCopied(true); setTimeout(()=>setCopied(false),1500)})}
+  return (
+    <div className="relative">
+      <AnimatePresence>
+        {show && (
+          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} exit={{opacity:0,height:0}} className="bg-html-code-bg border border-html-border rounded-lg overflow-hidden">
+            <div className="px-4 py-2 flex items-center justify-between border-b border-html-border">
+              <span className="text-xs text-html-text-soft font-mono truncate max-w-[60%]">{section.topics[index]}</span>
+              <button onClick={copy} className="text-html-text-soft hover:text-html-text transition-colors" title="Copiar">{copied? <Check className="w-4 h-4"/>:<Copy className="w-4 h-4"/>}</button>
+            </div>
+            <div className="p-4 overflow-x-auto">
+              <pre className="text-xs leading-relaxed text-html-text font-mono"><code>{code}</code></pre>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {!show && (
+        <div className="bg-html-code-bg border border-html-border rounded-lg p-8 text-center">
+          <Code className="w-10 h-10 text-html-text-soft mx-auto mb-3 opacity-50"/>
+          <p className="text-html-text-soft text-sm">Clique em "Ver Código" para visualizar o exemplo</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Divider(){
+  return (
+    <div className="flex items-center gap-3 py-8">
+      <div className="flex-1 h-px bg-gradient-html-border"/>
+      <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"/>
+      <div className="flex-1 h-px bg-gradient-html-border"/>
+    </div>
+  )
+}
+
+function Certificate(){
+  return (
+    <motion.div initial={{opacity:0,scale:.9}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} className="mt-16 bg-gradient-html rounded-2xl p-8 text-center border border-html-border relative overflow-hidden">
+      <div className="relative z-10">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-html-accent rounded-full mb-6 shadow-lg">
+          <Trophy className="w-12 h-12 text-white"/>
+        </div>
+        <h3 className="text-3xl font-bold mb-4 bg-gradient-html-accent bg-clip-text text-transparent">Parabéns! 🎉</h3>
+        <p className="text-html-text-soft mb-6 max-w-lg mx-auto">Você completou todas as seções deste guia. Continue praticando e avance para CSS e JavaScript.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button className="bg-gradient-html-accent text-white"><Download className="w-4 h-4 mr-2"/> Certificado</Button>
+          <Button variant="outline" className="border-html-border text-html-text-soft hover:text-html-text hover:bg-html-code-bg"><ArrowRight className="w-4 h-4 mr-2"/> Próximo: CSS</Button>
+        </div>
       </div>
     </motion.div>
   )
 }
 
-function StructureSection() {
+function Floating({showTop,onTop,toggleMini}){
   return (
-    <Section id="estrutura" title="Estrutura Básica do HTML" icon={<Layers className="w-5 h-5" />}>
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <CodeBlock code={`<!DOCTYPE html>\n<html lang="pt-BR">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <meta name="description" content="Descrição da página" />\n    <title>Título da Página</title>\n    <link rel="stylesheet" href="styles.css" />\n  </head>\n  <body>\n    <header>\n      <h1>Cabeçalho Principal</h1>\n      <nav>Menu de Navegação</nav>\n    </header>\n    <main>\n      <section>Conteúdo Principal</section>\n    </main>\n    <footer>Rodapé</footer>\n  </body>\n</html>`} />
-        <div className="space-y-4">
-          <KeyItem label="<!DOCTYPE html>" description="Declara o documento como HTML5" />
-          <KeyItem label="<html>" description="Elemento raiz que contém todo o conteúdo" />
-          <KeyItem label="<head>" description="Metadados invisíveis ao usuário" />
-          <KeyItem label="<meta charset>" description="Define a codificação de caracteres" />
-          <KeyItem label="<meta viewport>" description="Controla a visualização em dispositivos móveis" />
-          <KeyItem label="<title>" description="Título exibido na aba do navegador" />
-          <KeyItem label="<body>" description="Conteúdo visível da página" />
-        </div>
-      </div>
-      <div className="bg-html-code-bg border border-html-border rounded-lg p-4 text-sm text-html-text-soft">
-        <strong className="text-html-accent-warm">Dica:</strong> Sempre inclua a declaração DOCTYPE e defina o idioma no elemento html para melhor acessibilidade e SEO.
-      </div>
-    </Section>
+    <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+      <motion.button whileHover={{scale:1.08}} whileTap={{scale:.9}} className="p-3 bg-html-code-bg border border-html-border rounded-full text-html-text-soft hover:text-html-text" onClick={toggleMini} title="Progresso">
+        <CheckCircle className="w-5 h-5"/>
+      </motion.button>
+      <AnimatePresence>
+        {showTop && (
+          <motion.button initial={{opacity:0,scale:.8}} animate={{opacity:1,scale:1}} exit={{opacity:0,scale:.8}} whileHover={{scale:1.08}} whileTap={{scale:.9}} onClick={onTop} className="p-3 bg-html-code-bg border border-html-border rounded-full text-html-text-soft hover:text-html-text" aria-label="Voltar ao topo">
+            <ChevronUp className="w-5 h-5"/>
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 
-function SemanticSection() {
+function MiniProgress({show,onClose,sections,done,progress}){
   return (
-    <Section id="semantica" title="HTML Semântico" icon={<Globe className="w-5 h-5" />}>
-      <p className="mb-6 text-html-text-soft">
-        Usar elementos semânticos corretos melhora significativamente a acessibilidade, SEO e manutenibilidade do código.
-      </p>
-      <div className="grid md:grid-cols-2 gap-8">
-        <CodeBlock code={`<header>\n  <h1>Logo da Empresa</h1>\n  <nav>\n    <ul>\n      <li><a href="#home">Home</a></li>\n      <li><a href="#sobre">Sobre</a></li>\n      <li><a href="#contato">Contato</a></li>\n    </ul>\n  </nav>\n</header>\n\n<main>\n  <section>\n    <h2>Seção Principal</h2>\n    <article>\n      <h3>Artigo 1</h3>\n      <p>Conteúdo do artigo...</p>\n    </article>\n  </section>\n  \n  <aside>\n    <h3>Conteúdo Relacionado</h3>\n    <p>Informações complementares...</p>\n  </aside>\n</main>\n\n<footer>\n  <p>&copy; 2024 Empresa</p>\n</footer>`} />
-        <div className="space-y-4">
-          <KeyItem label="<header>" description="Cabeçalho da página ou seção" />
-          <KeyItem label="<nav>" description="Links de navegação principais" />
-          <KeyItem label="<main>" description="Conteúdo principal único da página" />
-          <KeyItem label="<section>" description="Seção temática do conteúdo" />
-          <KeyItem label="<article>" description="Conteúdo independente e reutilizável" />
-          <KeyItem label="<aside>" description="Conteúdo complementar ou relacionado" />
-          <KeyItem label="<footer>" description="Rodapé da página ou seção" />
-          <KeyItem label="<figure>" description="Conteúdo ilustrativo com legenda" />
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function ElementsSection() {
-  return (
-    <Section id="elementos" title="Elementos Essenciais" icon={<Code className="w-5 h-5" />}>
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="space-y-4">
-          <h4 className="font-semibold text-html-accent-warm">Texto e Tipografia</h4>
-          <CodeBlock code={`<h1>Título Principal</h1>\n<h2>Subtítulo</h2>\n<p>Parágrafo de texto.</p>\n<strong>Texto importante</strong>\n<em>Texto enfatizado</em>\n<mark>Texto destacado</mark>\n<small>Texto pequeno</small>\n<del>Texto deletado</del>\n<ins>Texto inserido</ins>`} />
-        </div>
-        <div className="space-y-4">
-          <h4 className="font-semibold text-html-accent-warm">Listas</h4>
-          <CodeBlock code={`<!-- Lista não ordenada -->\n<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>\n\n<!-- Lista ordenada -->\n<ol>\n  <li>Primeiro</li>\n  <li>Segundo</li>\n</ol>\n\n<!-- Lista de definições -->\n<dl>\n  <dt>HTML</dt>\n  <dd>HyperText Markup Language</dd>\n</dl>`} />
-        </div>
-        <div className="space-y-4">
-          <h4 className="font-semibold text-html-accent-warm">Links e Navegação</h4>
-          <CodeBlock code={`<!-- Link externo -->\n<a href="https://example.com" \n   target="_blank" \n   rel="noopener">\n  Link Externo\n</a>\n\n<!-- Link interno -->\n<a href="#secao">Ir para Seção</a>\n\n<!-- Download -->\n<a href="arquivo.pdf" download>\n  Baixar PDF\n</a>\n\n<!-- Email -->\n<a href="mailto:email@example.com">\n  Enviar Email\n</a>`} />
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function AttributesSection() {
-  return (
-    <Section id="atributos" title="Atributos Fundamentais" icon={<FileText className="w-5 h-5" />}>
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-html-accent-warm mb-3">Atributos Globais</h4>
-            <div className="space-y-2">
-              <KeyItem label="id" description="Identificador único do elemento" />
-              <KeyItem label="class" description="Classes CSS para estilização" />
-              <KeyItem label="data-*" description="Dados personalizados para JavaScript" />
-              <KeyItem label="title" description="Informação adicional em tooltip" />
-              <KeyItem label="lang" description="Define o idioma do conteúdo" />
-              <KeyItem label="style" description="Estilos CSS inline (evitar)" />
+    <AnimatePresence>
+      {show && (
+        <motion.div initial={{opacity:0,x:300}} animate={{opacity:1,x:0}} exit={{opacity:0,x:300}} className="fixed bottom-24 right-6 bg-html-code-bg/95 backdrop-blur-xl border border-html-border rounded-xl p-6 w-72 shadow-2xl z-40">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-semibold text-html-text">Progresso</h4>
+            <button onClick={onClose} className="text-html-text-soft hover:text-html-text transition-colors"><X className="w-4 h-4"/></button>
+          </div>
+          <div className="mb-4">
+            <div className="flex justify-between text-xs mb-1">
+              <span className="text-html-text-soft">Completado</span>
+              <span className="text-html-accent-warm font-medium">{Math.round(progress)}%</span>
+            </div>
+            <div className="w-full h-2 bg-html-code-bg rounded-full overflow-hidden border border-html-border">
+              <motion.div className="h-full bg-gradient-to-r from-orange-500 to-amber-400" initial={{width:0}} animate={{width:`${progress}%`}} transition={{duration:.5}}/>
             </div>
           </div>
-        </div>
-        <CodeBlock code={`<!-- Exemplos de uso de atributos -->\n<div id="container" \n     class="main-content highlighted"\n     data-user-id="123"\n     title="Container principal"\n     lang="pt-BR">\n  \n  <img src="imagem.jpg"\n       alt="Descrição da imagem"\n       width="300"\n       height="200"\n       loading="lazy" />\n  \n  <input type="email"\n         name="email"\n         placeholder="Digite seu email"\n         required\n         aria-label="Campo de email" />\n         \n  <button type="submit"\n          disabled\n          aria-pressed="false">\n    Enviar\n  </button>\n</div>`} />
-      </div>
-    </Section>
-  )
-}
-
-function FormsSection() {
-  return (
-    <Section id="formularios" title="Formulários e Entrada de Dados" icon={<FileText className="w-5 h-5" />}>
-      <div className="grid md:grid-cols-2 gap-8">
-        <CodeBlock code={`<form action="/submit" method="POST" novalidate>\n  <fieldset>\n    <legend>Informações Pessoais</legend>\n    \n    <label for="nome">Nome Completo:</label>\n    <input type="text" \n           id="nome" \n           name="nome" \n           required\n           autocomplete="name"\n           placeholder="Digite seu nome" />\n    \n    <label for="email">Email:</label>\n    <input type="email" \n           id="email" \n           name="email" \n           required\n           autocomplete="email" />\n    \n    <label for="telefone">Telefone:</label>\n    <input type="tel" \n           id="telefone" \n           name="telefone"\n           pattern="[0-9]{11}"\n           autocomplete="tel" />\n  </fieldset>\n  \n  <fieldset>\n    <legend>Preferências</legend>\n    \n    <input type="checkbox" \n           id="newsletter" \n           name="newsletter" />\n    <label for="newsletter">Receber newsletter</label>\n    \n    <input type="radio" \n           id="particular" \n           name="tipo" \n           value="particular" />\n    <label for="particular">Pessoa Física</label>\n    \n    <input type="radio" \n           id="empresa" \n           name="tipo" \n           value="empresa" />\n    <label for="empresa">Pessoa Jurídica</label>\n  </fieldset>\n  \n  <button type="submit">Enviar Formulário</button>\n</form>`} />
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-html-accent-warm mb-3">Tipos de Input</h4>
-            <div className="space-y-2 text-sm">
-              <KeyItem label="text" description="Texto simples" />
-              <KeyItem label="email" description="Email com validação" />
-              <KeyItem label="password" description="Senha (texto oculto)" />
-              <KeyItem label="tel" description="Número de telefone" />
-              <KeyItem label="number" description="Números com controles" />
-              <KeyItem label="date" description="Seletor de data" />
-              <KeyItem label="file" description="Upload de arquivos" />
-              <KeyItem label="checkbox" description="Múltipla seleção" />
-              <KeyItem label="radio" description="Seleção única" />
-            </div>
+          <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+            {sections.slice(0,6).map(s=>(
+              <div key={s.id} className="flex items-center gap-3 text-xs">
+                {done.has(s.id)? <CheckCircle className="w-4 h-4 text-orange-400"/>:<div className="w-4 h-4 border border-html-border rounded-full"/>}
+                <span className="text-html-text-soft truncate">{s.title}</span>
+              </div>
+            ))}
+            {sections.length>6 && <div className="text-[11px] text-html-text-soft text-center pt-1">+{sections.length-6} seções…</div>}
           </div>
-          <div>
-            <h4 className="font-semibold text-html-accent-warm mb-3">Atributos Importantes</h4>
-            <div className="space-y-2 text-sm">
-              <KeyItem label="required" description="Campo obrigatório" />
-              <KeyItem label="placeholder" description="Texto de exemplo" />
-              <KeyItem label="autocomplete" description="Preenchimento automático" />
-              <KeyItem label="pattern" description="Regex para validação" />
-              <KeyItem label="min/max" description="Valores mínimo/máximo" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Section>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -406,9 +455,7 @@ function Section({ id, title, icon, children }) {
   )
 }
 
-function Divider() {
-  return <div className="h-px bg-gradient-html-border my-12" />
-}
+// (Removed duplicate Divider definition to avoid redeclaration)
 
 function CodeBlock({ code }) {
   const [copied, setCopied] = React.useState(false)
