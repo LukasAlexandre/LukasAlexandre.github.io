@@ -265,7 +265,8 @@ function MiniProgress({show,onClose,sections,done,progress}){
             {sections.length>6 && <div className="text-[11px] text-html-text-soft text-center pt-1">+{sections.length-6} seções…</div>}
           </div>
         </motion.div>
-      )}
+      )} 
+      //
     </AnimatePresence>
   )
 }
