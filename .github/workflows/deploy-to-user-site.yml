@@ -1,8 +1,8 @@
-name: Deploy portfolio to user site
+name: Deploy para LukasAlexandre.github.io
 
 on:
   push:
-    branches: [ master ]   # seu repo usa master
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -13,18 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Detecta a pasta do projeto (onde está o package.json)
       - name: Detect project directory
         id: detect
         run: |
-          set -e
           CANDIDATE=$(git ls-files | grep -E '(^|/)package.json$' | head -n1 | xargs -I{} dirname {})
           if [ -z "$CANDIDATE" ]; then
-            echo "Nenhum package.json encontrado no repo."
+            echo "Nenhum package.json encontrado."
             exit 1
           fi
           echo "PROJECT_DIR=$CANDIDATE" >> $GITHUB_ENV
-          echo "Projeto detectado em: $CANDIDATE"
+          echo "Projeto em: $CANDIDATE"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -33,30 +31,23 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ env.PROJECT_DIR }}/package-lock.json
 
-      - name: Install deps
-        run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Install dependencies
+        run: npm ci
         working-directory: ${{ env.PROJECT_DIR }}
 
-      # Tenta Vite/Next/export; ignora scripts que não existem
-      - name: Build (tentativas)
-        run: |
-          npm run build || true
-          npm run export || true
-          npm run export:pages || true
+      - name: Build project
+        run: npm run build
         working-directory: ${{ env.PROJECT_DIR }}
 
       - name: Normalize output dir
         run: |
           cd "${{ env.PROJECT_DIR }}"
           mkdir -p out
-          if [ -d "out" ]; then echo "using out";
-          elif [ -d "dist" ]; then mv dist out;
-          elif [ -d "build" ]; then mv build out;
-          else echo "Nenhuma pasta de build encontrada" && exit 1; fi
-          [ -f out/404.html ] || cp out/index.html out/404.html || true
+          if [ -d "dist" ]; then mv dist/* out/; fi
+          if [ -d "build" ]; then mv build/* out/; fi
+          cp out/index.html out/404.html || true
 
-      - name: Deploy to LukasAlexandre.github.io (main)
+      - name: Deploy to github.io
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PAT_PAGES }}
