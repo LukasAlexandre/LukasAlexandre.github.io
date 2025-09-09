@@ -1,2 +1,58 @@
-/* Placeholder JS theme */
-.tech-js-page { color:#fff; }
+/* JavaScript Study Theme (scoped) */
+.js-theme { 
+	--js-bg:#070b13;
+	--js-bg-alt:#0b1220;
+	--js-accent:#22d3ee;     /* cyan */
+	--js-accent-2:#6366f1;   /* indigo */
+	--js-text:#e6f1ff;
+	--js-text-soft:#a8c3e6;
+	--js-code-bg:rgba(8,12,20,.75);
+	--js-border:rgba(99,102,241,.28);
+	--js-border-strong:rgba(34,211,238,.6);
+	color:var(--js-text);
+	background:
+		radial-gradient(800px 500px at 10% -10%, rgba(99,102,241,.22), transparent),
+		radial-gradient(900px 600px at 90% 0%, rgba(34,211,238,.18), transparent),
+		linear-gradient(180deg, var(--js-bg), var(--js-bg-alt));
+}
+.js-theme > * { position:relative; z-index:1; }
+
+/* Utilities used by the page */
+.text-js-text { color: var(--js-text); }
+.text-js-soft { color: var(--js-text-soft); }
+.bg-js-code { background: var(--js-code-bg); }
+.border-js { border-color: var(--js-border); }
+.bg-gradient-js { background: linear-gradient(150deg, var(--js-accent), var(--js-accent-2)); }
+.bg-gradient-js-soft { background: linear-gradient(180deg, rgba(99,102,241,.10), rgba(34,211,238,.10)); }
+
+/* Button accent integration */
+button[data-slot="button"].bg-gradient-accent { background: linear-gradient(135deg, var(--js-accent), var(--js-accent-2)); }
+
+/* Soft hero gradient (dark friendly) */
+.bg-gradient-hero {
+	background:
+		radial-gradient(600px 300px at 10% -10%, rgba(99,102,241,.18), transparent),
+		radial-gradient(600px 300px at 90% 0%, rgba(34,211,238,.16), transparent),
+		linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+}
+
+/* Accent gradient surfaces */
+.bg-gradient-accent { background: linear-gradient(135deg, var(--js-accent), var(--js-accent-2)); }
+.bg-gradient-card { background: linear-gradient(180deg, rgba(99,102,241,.10), rgba(34,211,238,.10)); }
+
+/* Interactive card hover */
+.interactive-card {
+	transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.interactive-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 24px rgba(0,0,0,.25), 0 0 0 1px var(--js-border);
+}
+
+/* JS page: remove visible scrollbar styling (keep page scroll functional) */
+.js-theme { scrollbar-width: none; }
+.js-theme * { scrollbar-width: none; }
+.js-theme::-webkit-scrollbar,
+.js-theme *::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.js-theme::-webkit-scrollbar-track,
+.js-theme *::-webkit-scrollbar-track { background: transparent !important; }

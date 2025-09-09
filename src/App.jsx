@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
-import { motion , AnimatePresence } from 'framer-motion'
-import { Moon, Sun, Globe, Menu, X, Github, Linkedin, Mail, ExternalLink, ChevronDown, Code, Database, Wrench, MapPin, Phone, Send } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Github, Linkedin, Mail, ExternalLink, ChevronDown, Code, Database, Wrench, MapPin, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
@@ -13,15 +13,11 @@ import Header from '@/components/Header.jsx'
 
 // Assets imports
 import profileImage from './100711785.jpeg'
-import thamis01 from './assets/images/thamis-01.png'
-import fokus01 from './assets/images/fokus-01.png'
-import aluraDev01 from './assets/images/alura-dev-01.png'
-import davi01 from './assets/images/dave01.png'
-import optimus01 from './assets/images/optimus.png'
-import alurabooks01 from './assets/images/books.png'
+
+// Mark motion as used for ESLint (we use member expressions like <motion.div/>)
+const MOTION = motion
 
 function App() {
-  const [isDark, setIsDark] = useState(false) // retained for backward compat (some sections use isDark)
   const [language, setLanguage] = useState('pt')
 
 
@@ -31,8 +27,9 @@ function App() {
     const savedLanguage = localStorage.getItem('language')
 
     if (savedTheme === 'dark') {
-      setIsDark(true)
       document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
     }
 
     if (savedLanguage) {

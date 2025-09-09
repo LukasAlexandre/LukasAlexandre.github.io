@@ -6,6 +6,7 @@ import { technologies } from './techData.js'
 export default function StudySubnav() {
   const { pathname } = useLocation()
   const isHtml = pathname.endsWith('/html') || pathname === '/study-in/html'
+  void motion
   const baseStyle = {
     background: 'rgba(18,22,34,0.82)',
     boxShadow: '0 2px 24px 0 rgba(0,0,0,0.13)',
@@ -21,7 +22,7 @@ export default function StudySubnav() {
     border: '1px solid var(--html-border)'
   }
   return (
-    <div className="study-subnav sticky top-16 z-30">
+    <div className="study-subnav sticky top-[calc(4rem+10px)] z-30">
       <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex gap-3 overflow-x-auto custom-scroll justify-center"
         style={isHtml ? htmlStyle : baseStyle}
@@ -35,18 +36,22 @@ export default function StudySubnav() {
             end
             className={({isActive})=>
               `relative group flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 `+
-              (pathname === '/study-in'
+              (isActive
                 ? 'text-white bg-gradient-to-r from-orange-400 to-pink-500 shadow-lg'
                 : 'bg-muted/40 hover:bg-muted text-foreground/80 hover:text-foreground')
             }
           >
-            <span className="relative z-10">Home</span>
-            {pathname === '/study-in' && (
-              <motion.span
-                layoutId="pill-glow"
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 opacity-80 blur-md mix-blend-screen pointer-events-none"
-                transition={{type:'spring', stiffness:350, damping:30}}
-              />
+            {({isActive}) => (
+              <>
+                <span className="relative z-10">Home</span>
+                {isActive && (
+                  <motion.span
+                    layoutId="pill-glow"
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 opacity-80 blur-md mix-blend-screen pointer-events-none"
+                    transition={{type:'spring', stiffness:350, damping:30}}
+                  />
+                )}
+              </>
             )}
           </NavLink>
         </motion.div>
@@ -56,19 +61,23 @@ export default function StudySubnav() {
               to={`/study-in/${tech.slug}`}
               className={({isActive})=>
                 `relative group flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 `+
-                (pathname.endsWith(tech.slug)
+                (isActive
                   ? 'text-white bg-gradient-to-r '+tech.color+' shadow-lg'
                   : 'bg-muted/40 hover:bg-muted text-foreground/80 hover:text-foreground')
               }
             >
-              <span className="relative z-10">{tech.label}</span>
-              {pathname.endsWith(tech.slug) && (
-                <motion.span
-                  layoutId="pill-glow"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r opacity-80 blur-md mix-blend-screen pointer-events-none"
-                  style={{background: undefined}}
-                  transition={{type:'spring', stiffness:350, damping:30}}
-                />
+              {({isActive}) => (
+                <>
+                  <span className="relative z-10">{tech.label}</span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="pill-glow"
+                      className="absolute inset-0 rounded-full bg-gradient-to-r opacity-80 blur-md mix-blend-screen pointer-events-none"
+                      style={{background: undefined}}
+                      transition={{type:'spring', stiffness:350, damping:30}}
+                    />
+                  )}
+                </>
               )}
             </NavLink>
           </motion.div>

@@ -15,9 +15,15 @@ export default function StudyLayout({ language, setLanguage }) {
   },[])
 
   const isHtml = activeTech?.slug === 'html'
+  const isJs = activeTech?.slug === 'javascript'
+  // Allow some tech pages to use the full-width container (HTML and JavaScript for now)
+  const isWide = isHtml || isJs
+  const themeClass = isHtml ? 'html-theme' : isJs ? 'js-theme' : 'bg-[#0b0e13]'
+  // no-op to satisfy lint rules in environments that tree-shake unused imports aggressively
+  void motion
   return (
-    <div className={`relative min-h-screen w-full flex flex-col transition-colors duration-500 text-foreground pt-0 dark ${isHtml?'html-theme':'bg-[#0b0e13]'}`}>
-      {!isHtml && (
+    <div className={`relative min-h-screen w-full flex flex-col transition-colors duration-500 text-foreground pt-0 dark ${themeClass}`}>
+      {!isHtml && !isJs && (
         <>
           <div aria-hidden className="pointer-events-none fixed inset-0 z-0 mix-blend-soft-light opacity-[.22] [background:linear-gradient(0deg,transparent_0,rgba(255,255,255,.04)_1px),linear-gradient(90deg,transparent_0,rgba(255,255,255,.04)_1px)] [background-size:12px_12px]" />
           <div aria-hidden className="fixed inset-0 z-0 bg-[radial-gradient(1200px_800px_at_10%_-10%,rgba(99,102,241,.13),transparent),radial-gradient(900px_600px_at_90%_10%,rgba(14,165,233,.13),transparent)]" />
@@ -28,7 +34,7 @@ export default function StudyLayout({ language, setLanguage }) {
         <Header language={language} setLanguage={setLanguage} />
         <StudySubnav />
         <main className="flex-1 w-full">
-          <div className={`${isHtml?'w-full max-w-none px-8 sm:px-14 lg:px-40':'max-w-4xl mx-auto'} w-full px-4 sm:px-6 lg:px-8 pt-24 pb-12`}>            
+          <div className={`${isWide?'w-full max-w-none px-8 sm:px-14 lg:px-40':'max-w-4xl mx-auto'} w-full px-4 sm:px-6 lg:px-8 pt-24 pb-12`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={pathname}
