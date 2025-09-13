@@ -4,6 +4,7 @@ import HtmlPage from '@/study/html/HtmlPage.jsx'
 import CssPage from '@/study/css/index.jsx'
 import JavascriptPage from '@/study/javascript/index.jsx'
 import ReactPage from '@/study/react/index.jsx'
+import PhpPage from '@/study/php/index.jsx'
 import NodePage from '@/study/node/index.jsx'
 import PrismaPage from '@/study/prisma/index.jsx'
 import MysqlPage from '@/study/mysql/index.jsx'
@@ -26,6 +27,7 @@ export default function StudyIn({ language='pt', setLanguage }) {
             case 'css': element = <CssPage />; break
             case 'javascript': element = <JavascriptPage />; break
             case 'react': element = <ReactPage />; break
+            case 'php': element = <PhpPage />; break
             case 'node': element = <NodePage />; break
             case 'prisma': element = <PrismaPage />; break
             case 'mysql': element = <MysqlPage />; break

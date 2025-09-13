@@ -1,0 +1,60 @@
+/* PHP Study Theme (DevPurple) - scoped */
+.php-theme {
+  --php-bg-start: #29274C;
+  --php-bg-end: #7E52A0;
+  --php-surface: rgba(41, 39, 76, 0.8);
+  --php-surface-strong: rgba(41, 39, 76, 0.95);
+  --php-border: rgba(126, 82, 160, 0.35);
+  --php-accent: #7E52A0;
+  --php-accent-2: #A855F7;
+  --php-text: #ffffff;
+  --php-text-soft: rgba(255,255,255,.8);
+  --php-chip: rgba(126, 82, 160, 0.15);
+  --php-chip-hover: rgba(126, 82, 160, 0.25);
+  --php-code: rgba(41,39,76,.85);
+}
+.php-theme { color: var(--php-text); }
+
+.php-bg {
+  background: linear-gradient(135deg, var(--php-bg-start) 0%, var(--php-bg-end) 100%);
+}
+.php-header {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--php-surface-strong);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--php-border);
+}
+.php-logo { color: var(--php-accent); font-weight: 800; }
+.php-nav a { color: #fff; text-decoration: none; padding: .5rem .75rem; border-radius: 8px; }
+.php-nav a:hover { background: var(--php-chip-hover); }
+
+.php-layout { display:flex; min-height: 100%; }
+.php-sidebar { width: 280px; background: var(--php-surface); border-right: 1px solid var(--php-border); padding: 1rem; }
+.php-sidebar h3 { color: var(--php-accent); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; margin: .5rem 0 1rem; }
+.php-sidebar a { display:block; padding: .6rem .75rem; border-radius: 10px; color: var(--php-text-soft); border-left: 3px solid transparent; }
+.php-sidebar a:hover { background: var(--php-chip); color:#fff; border-left-color: var(--php-accent); transform: translateX(4px); transition: all .2s ease; }
+.php-sidebar a.active { background: rgba(126, 82, 160, 0.3); color:#fff; border-left-color: var(--php-accent); }
+
+.php-main { flex:1; padding: 1.25rem; }
+.php-hero { text-align:center; padding: 3.5rem 1.25rem; background: rgba(126,82,160,.12); border-radius: 20px; border: 1px solid var(--php-border); }
+.php-badge { display:inline-block; padding:.4rem 1rem; border-radius:999px; font-size:.75rem; font-weight:700; letter-spacing:.08em; background: linear-gradient(45deg, var(--php-accent), var(--php-accent-2)); }
+.php-title { font-size: clamp(2rem, 4vw, 3.2rem); background: linear-gradient(135deg, #fff, var(--php-accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; margin: .6rem 0 1rem; }
+.php-sub { color: var(--php-text-soft); max-width: 680px; margin: 0 auto; }
+
+.php-progress { height: 4px; background: rgba(126,82,160,.25); border-radius: 999px; overflow:hidden; margin: 1.25rem auto; max-width: 720px; }
+.php-progress > span { display:block; height:100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--php-accent), var(--php-accent-2)); }
+
+.php-card { background: rgba(41,39,76,.6); border: 1px solid var(--php-border); border-radius: 16px; padding: 1.25rem; }
+.php-section { background: rgba(41,39,76,.6); border:1px solid var(--php-border); border-radius: 16px; padding: 1.25rem; margin: 1rem 0; }
+.php-section-header { display:flex; align-items:center; justify-content: space-between; gap:.75rem; padding-bottom:.75rem; border-bottom: 1px solid var(--php-border); }
+.php-section-title { display:flex; align-items:center; gap:.5rem; font-size: 1.4rem; }
+.php-chip { background: var(--php-chip); border-left: 4px solid var(--php-accent); padding: 1rem; border-radius: 12px; cursor: pointer; }
+.php-chip:hover { background: var(--php-chip-hover); transform:translateX(8px); transition:all .2s ease; }
+
+.php-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+@media (max-width: 900px){ .php-grid { grid-template-columns: 1fr; } .php-sidebar{ display:none; } }
+
+.php-code { background: var(--php-code); border: 1px solid var(--php-border); border-radius: 12px; padding: 1rem; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: .9rem; line-height:1.5; }
+.php-code-toolbar { display:flex; align-items:center; justify-content: space-between; border-bottom: 1px solid var(--php-border); padding-bottom: .5rem; margin-bottom: .75rem; }
+.php-copy { background: rgba(126, 82, 160, 0.2); color: #fff; border: 1px solid var(--php-border); padding: .4rem .8rem; border-radius: 8px; cursor: pointer; font-size: .8rem; }
+.php-copy:hover{ background: rgba(126, 82, 160, 0.35); }
