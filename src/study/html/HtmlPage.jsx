@@ -33,14 +33,13 @@ export default function HtmlPage(){
   const [active,setActive] = useState('')
   const [done,setDone] = useState(new Set())
   const [showTop,setShowTop] = useState(false)
-  const [showSide,setShowSide] = useState(false)
+  // side nav agora sempre visível; removido estado showSide
   const [mini,setMini] = useState(false)
 
   useEffect(()=>{
     const onScroll=()=>{
       const y = window.scrollY
       setShowTop(y>400)
-      setShowSide(y>320)
       const els = sections.map(s=>document.getElementById(s.id)).filter(Boolean)
       const current = els.find(el=>{ const r = el.getBoundingClientRect(); return r.top<=110 && r.bottom>=110 })
       if(current) setActive(current.id)
@@ -53,9 +52,9 @@ export default function HtmlPage(){
   const progress = (done.size/sections.length)*100
 
   return (
-    <div className="relative max-w-6xl mx-auto px-6 md:px-10 py-10 pt-14">
+    <div className="relative max-w-6xl mx-auto px-6 md:px-10 py-10 pt-14 xl:pl-72">
       <Hero progress={progress} count={`${done.size}/${sections.length}`}/>
-      {showSide && <SideNav sections={sections} active={active} done={done} />}
+      <SideNav sections={sections} active={active} done={done} />
       {sections.map((s,i)=>(
         <React.Fragment key={s.id}>
           <SectionBlock section={s} index={i} complete={()=>mark(s.id)} completed={done.has(s.id)} />

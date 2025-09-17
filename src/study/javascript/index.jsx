@@ -59,7 +59,7 @@ export default function JavascriptPage(){
   const progress = (done.size / sections.length) * 100
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white overflow-x-hidden">
+    <div ref={containerRef} className="min-h-screen w-full text-white overflow-x-hidden xl:pl-80">
       {/* Background Effects */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(247,223,30,0.1)_0%,transparent_50%)]" />
@@ -94,12 +94,9 @@ export default function JavascriptPage(){
         ))}
       </div>
 
-  <div className={`relative z-10 w-full px-6 md:px-10 pt-2 pb-10`}>
-        <div className="xl:grid xl:grid-cols-[18rem,1fr] xl:gap-8 xl:items-start">
-          <div className="hidden xl:block self-start">
-            <SideNav sections={sections} active={active} done={done} />
-          </div>
-          <div>
+  <div className={`relative z-10 w-full px-4 md:px-8 pt-2 pb-10`}>
+  <SideNav sections={sections} active={active} done={done} />
+  <div>
             <motion.div style={{ opacity, scale }}>
               <Hero progress={progress} count={`${done.size}/${sections.length}`} />
             </motion.div>
@@ -116,7 +113,6 @@ export default function JavascriptPage(){
         <Floating showTop={showTop} onTop={() => window.scrollTo({ top: 0, behavior: 'smooth' })} toggleMini={() => setMini(m => !m)} />
         <MiniProgress show={mini} onClose={() => setMini(false)} sections={sections} done={done} progress={progress} />
       </div>
-    </div>
   )
 }
 
@@ -249,13 +245,13 @@ function Hero({ progress, count }) {
 
 function SideNav({ sections, active, done }) {
   return (
-    <motion.aside 
-      initial={{ opacity: 0, x: -20 }} 
-      animate={{ opacity: 1, x: 0 }} 
-      className="sticky top-[calc(4rem+12px)] z-30 w-[18rem] pointer-events-none"
+    <motion.aside
+      initial={{ opacity: 0, x: -30 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="hidden xl:block fixed left-6 top-1/2 -translate-y-1/2 z-40 w-72"
     >
-      <div className="bg-black/80 backdrop-blur-xl rounded-3xl p-4 border border-yellow-400/20 shadow-2xl pointer-events-auto">
-        <h3 className="font-black text-yellow-400 text-sm tracking-wider uppercase mb-6 flex items-center gap-3">
+      <div className="bg-black/80 backdrop-blur-xl rounded-3xl p-5 border border-yellow-400/20 shadow-2xl max-h-[75vh] overflow-y-auto">
+        <h3 className="font-black text-yellow-400 text-xs tracking-wider uppercase mb-5 flex items-center gap-2">
           <div className="w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
             <Book className="w-4 h-4 text-black" />
           </div>
@@ -268,25 +264,25 @@ function SideNav({ sections, active, done }) {
               onClick={() => {
                 const el = document.getElementById(s.id)
                 if (!el) return
-                const y = el.getBoundingClientRect().top + window.scrollY - 120
+                const y = el.getBoundingClientRect().top + window.scrollY - 100
                 window.scrollTo({ top: y, behavior: 'smooth' })
               }}
               className={`group flex items-center gap-3 w-full p-2.5 rounded-xl text-left transition-all duration-300 ${
                 active === s.id
-                  ? 'bg-gradient-to-r from-yellow-400/15 to-orange-500/15 text-yellow-400 shadow-lg border border-yellow-400/30'
+                  ? 'bg-gradient-to-r from-yellow-400/15 to-orange-500/15 text-yellow-400 shadow border border-yellow-400/30'
                   : 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
               }`}
               whileHover={{ scale: 1.02, x: 5 }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.03 }}
             >
               <div className={`p-1.5 rounded-lg ${active === s.id ? 'bg-yellow-400 text-black' : 'bg-gray-800 text-gray-400'}`}>
                 {s.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <span className="block text-sm font-semibold leading-5 truncate">{s.title}</span>
-                <span className="block text-[11px] text-gray-500 leading-4 truncate">{s.topics.length} tópicos</span>
+                <span className="block text-[13px] font-semibold leading-5 truncate">{s.title}</span>
+                <span className="block text-[10px] text-gray-500 leading-4 truncate">{s.topics.length} tópicos</span>
               </div>
               {done.has(s.id) ? (
                 <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
@@ -468,19 +464,40 @@ function Example({ section, index, show }) {
   
   const examples = {
     fundamentos: [
+  // Variáveis
   'let linguagem = "JavaScript";\nconst ano = 2024;\nconst ativo = true;\n\nconsole.log(`${linguagem} ${ano}: ${ativo}`);',
-      'const numeros = [1, 2, 3, 4, 5];\nconst pessoa = {\n  nome: "Ana",\n  idade: 25,\n  ativa: true\n};',
-      '// Coerção implícita\nconsole.log(5 + "3"); // "53"\nconsole.log(+"5");   // 5\nconsole.log(!!"");   // false'
+  // Tipos primitivos
+  'const numeros = [1, 2, 3, 4, 5];\nconst pessoa = {\n  nome: "Ana",\n  idade: 25,\n  ativa: true\n};\n\nconsole.log(typeof numeros, Array.isArray(numeros));\nconsole.log(typeof pessoa);',
+  // Operadores
+  'const a = 10;\nconst b = 3;\nconsole.log("soma", a + b);\nconsole.log("resto", a % b);\nconsole.log("exponenciação", a ** b);\nconsole.log("comparação", a > b, a === 10);',
+  // Coerção
+  '// Coerção implícita x explícita\nconsole.log(5 + "3");       // "53" (string)\nconsole.log(Number("5") + 3); // 8 (number)\nconsole.log(Boolean(""));    // false\nconsole.log(Boolean("texto")); // true',
+  // typeof
+  'console.log(typeof 123);        // number\nconsole.log(typeof "abc");     // string\nconsole.log(typeof true);       // boolean\nconsole.log(typeof null);       // object (quirk)\nconsole.log(typeof undefined);  // undefined\nconsole.log(typeof Symbol());   // symbol',
+  // Hoisting
+  'console.log(x); // undefined (var é içada)\nvar x = 10;\n// console.log(y); // ReferenceError (let/const não são acessíveis antes)\nlet y = 20;\nfunc(); // ok\nfunction func(){ console.log("função içada"); }'
     ],
     estruturas: [
-      'const arr = [1, 2, 3, 4, 5];\nconst [primeiro, segundo, ...resto] = arr;\nconsole.log(primeiro, segundo, resto);',
-      'const usuario = { nome: "João", idade: 30, cidade: "SP" };\nconst { nome, idade, ...outros } = usuario;\nconsole.log(nome, idade, outros);',
-      'const mapa = new Map();\nmapa.set("chave", "valor");\nmapa.set(1, "número");\nconsole.log(mapa.get("chave"));'
+  // Arrays
+  'const numeros = [1,2,3];\nnumeros.push(4);\nconsole.log(numeros.length, numeros);',
+  // Objects
+  'const usuario = { nome: "João", idade: 30 };\nusuario.email = "joao@mail.com";\nconsole.log(Object.keys(usuario));',
+  // Map/Set
+  'const mapa = new Map();\nmapa.set("a",1);\nmapa.set("b",2);\nconsole.log(mapa.get("a"), mapa.size);\nconst conjunto = new Set([1,2,2,3]);\nconsole.log(conjunto.has(2), conjunto.size);',
+  // WeakMap/WeakSet
+  'let obj = {};\nconst weakMap = new WeakMap();\nweakMap.set(obj, "dados");\nconsole.log(weakMap.get(obj));\nlet obj2 = {};\nconst weakSet = new WeakSet([obj2]);\nconsole.log(weakSet.has(obj2));',
+  // Destructuring
+  'const arr = [1,2,3,4,5];\nconst [a,b,...resto] = arr;\nconst pessoa = { nome: "Ana", idade: 25, cidade: "SP" };\nconst { nome, idade, ...outros } = pessoa;\nconsole.log(a,b,resto,nome,idade,outros);',
+  // Spread/Rest
+  'function soma(...nums){ return nums.reduce((t,n)=>t+n,0); }\nconst base = [1,2,3];\nconst copia = [...base,4];\nconsole.log(soma(1,2,3), copia);'
     ],
     funcoes: [
       'function somar(a, b) {\n  return a + b;\n}\n\nconst resultado = somar(10, 5);\nconsole.log(resultado); // 15',
       'const multiplicar = (x, y) => x * y;\nconst quadrado = x => x * x;\n\nconsole.log(multiplicar(4, 3));\nconsole.log(quadrado(5));',
-      'function criarContador() {\n  let count = 0;\n  return function() {\n    return ++count;\n  };\n}\n\nconst contador = criarContador();\nconsole.log(contador()); // 1\nconsole.log(contador()); // 2'
+  'function criarContador() {\n  let count = 0;\n  return function() {\n    return ++count;\n  };\n}\n\nconst contador = criarContador();\nconsole.log(contador()); // 1\nconsole.log(contador()); // 2',
+  '(function(){\n  const msg = "IIFE";\n  console.log(msg);\n})();',
+  'function processar(a,b,callback){\n  const r = a + b;\n  callback(r);\n}\n\nprocessar(3,4,valor => console.log("Resultado:", valor));',
+  'function somaTudo(inicio = 0, ...nums){\n  return nums.reduce((t,n)=>t+n, inicio);\n}\n\nconsole.log(somaTudo(10,1,2,3)); // 16'
     ],
     controle: [
       'let x = 10;\nif (x > 5) {\n  console.log("x é maior que 5");\n} else {\n  console.log("x não é maior que 5");\n}',
@@ -503,8 +520,11 @@ function Example({ section, index, show }) {
       'class Utils {\n  static soma(a, b) { return a + b; }\n}\nconsole.log(Utils.soma(2, 3));'
     ],
     modulos: [
-      '// arquivo: utils.js\nexport const PI = 3.14;\nexport function sum(a, b) { return a + b; }\n\n// arquivo: main.js\nimport { PI, sum } from "./utils.js";\nconsole.log(PI, sum(1, 2));',
-      '// arquivo: component.js\nexport default class Component { /* ... */ }\n\n// arquivo: app.js\nimport MyComponent from "./component.js";\nconst comp = new MyComponent();'
+      '// import/export nomeado\n// utils.js\nexport const PI = 3.14;\nexport function sum(a, b) { return a + b; }\n\n// main.js\nimport { PI, sum } from "./utils.js";\nconsole.log(PI, sum(1,2));',
+      '// default export\n// component.js\nexport default function Hello(name){\n  return `Olá ${name}`;\n}\n// main.js\nimport Hello from "./component.js";\nconsole.log(Hello("JS"));',
+      '// dynamic import\nasync function load(){\n  const { sum } = await import("./utils.js");\n  console.log(sum(2,3));\n}\nload();',
+      '// CommonJS vs ES Module\n// commonjs: const mod = require("./mod");\n// esmodule: import mod from "./mod.js";\n// No browser atual só ES Modules nativos',
+      '// bundlers\n// Ex: Vite/webpack fazem tree-shaking e code-splitting\n// import("./chart.js") carregado sob demanda'
     ],
     apis: [
       'localStorage.setItem("theme", "dark");\nconsole.log(localStorage.getItem("theme"));',
@@ -567,6 +587,119 @@ function Example({ section, index, show }) {
   }
 
   const code = (examples[section.id] || ['// Exemplo em desenvolvimento...'])[index] || (examples[section.id] || ['// Exemplo'])[0]
+  // Mapeamento de saídas esperadas simulando o console
+  const outputs = {
+    fundamentos: [
+  'JavaScript 2024: true',
+  'object true\nobject',
+  'soma 13\nresto 1\nexponenciação 1000\ncomparação true true',
+  '53\n8\nfalse\ntrue',
+  'number\nstring\nboolean\nobject\nundefined\nsymbol',
+  'undefined\nfunção içada'
+    ],
+    estruturas: [
+  '4 [1,2,3,4]',
+  '["nome","idade","email"]',
+  '1 2\ntrue 3',
+  'dados\ntrue',
+  '1 2 [3,4,5] Ana 25 { cidade: "SP" }',
+  '6 [1,2,3,4]'
+    ],
+    funcoes: [
+      '15',
+      '12\n25',
+  '1\n2',
+  'IIFE',
+  'Resultado: 7',
+  '16'
+    ],
+    controle: [
+      'x é maior que 5',
+      'Dia de trabalho',
+      '0\n1\n2\n0\n1\n2'
+    ],
+    dom: [
+      'Texto alterado (exemplo conceitual)',
+      '(Alerta exibido)\nElemento clicado!',
+      'dev'
+    ],
+    assincrono: [
+      '(após 1s) Executado após 1 segundo',
+      'Dados',
+      '(JSON da API)'
+    ],
+    classes: [
+      'Rex faz um som.',
+      'Rex late.',
+      '5'
+    ],
+    modulos: [
+      '3.14 3',
+      'Olá JS',
+      '5',
+      '(demonstração de sintaxes)',
+      '(chunk carregado sob demanda)'
+    ],
+    apis: [
+      'dark',
+      'latitude longitude',
+      'Hello'
+    ],
+    regex: [
+      'true\n["o","o"]',
+      'true',
+      'bxnxnx'
+    ],
+    json: [
+      '{"name":"Alice","age":30}',
+      'Book',
+      '2'
+    ],
+    performance: [
+      '1\n2\n3 ... (throttle)',
+      '(animation frames)',
+      '(mensagem do worker)'
+    ],
+    debugging: [
+      'Variável: ...\nErro / Aviso (exemplo)',
+      '(Execução pausada no debugger)',
+      '(Breakpoint no DevTools)'
+    ],
+    testing: [
+      '✔ adds 1 + 2 to equal 3',
+      'mocked value'
+    ],
+    es6plus: [
+      'Olá, Maria! Você tem 30 anos.',
+      '(valor secreto)',
+      '1'
+    ],
+    patterns: [
+      'Eu sou privado',
+      '(observers notificados)',
+      '{ type: "car", wheels: 4 }'
+    ],
+    frameworks: [
+      'Olá, React!',
+      'Olá, Vue!',
+      'Servidor respondendo: Olá, Node.js!'
+    ],
+    ferramentas: [
+      '(Bundle gerado)',
+      '(Arquivo bundle.js criado)',
+      'Hello, TypeScript!'
+    ],
+    projetos: [
+      '(TODO adicionado)',
+      '(Resultado da operação)',
+      '(JSON do clima)'
+    ],
+    avancado: [
+      '(Proxy set age=25)',
+      'sample'
+    ]
+  }
+  const output = (outputs[section.id] || [''])[index] || (outputs[section.id] || [''])[0]
   
   const copy = () => {
     navigator.clipboard.writeText(code).then(() => {
@@ -607,9 +740,17 @@ function Example({ section, index, show }) {
               </motion.button>
             </div>
             <div className="p-6 overflow-x-auto">
-              <pre className="text-sm leading-relaxed text-gray-100 font-mono">
-                <code>{code}</code>
-              </pre>
+              <pre className="text-sm leading-relaxed text-gray-100 font-mono"><code>{code}</code></pre>
+            </div>
+            <div className="border-t-2 border-gray-700 bg-gray-950/60 px-6 py-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs tracking-wider text-gray-500 font-semibold uppercase">Saída (console)</span>
+              </div>
+              {output ? (
+                <pre className="text-[13px] leading-relaxed text-green-400 font-mono whitespace-pre-wrap"><code>{output}</code></pre>
+              ) : (
+                <p className="text-xs text-gray-600">Nenhuma saída definida para este exemplo.</p>
+              )}
             </div>
           </motion.div>
         )}

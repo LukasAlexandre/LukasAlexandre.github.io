@@ -34,7 +34,7 @@ export default function StudyLayout({ language, setLanguage }) {
         <Header language={language} setLanguage={setLanguage} />
         <StudySubnav />
         <main className="flex-1 w-full">
-          <div className={`${isWide?'w-full max-w-none px-8 sm:px-14 lg:px-40':'max-w-4xl mx-auto'} w-full px-4 sm:px-6 lg:px-8 pt-24 pb-12`}>
+          <div className={`${isWide?'w-full max-w-none px-4 sm:px-8 lg:px-12':'max-w-4xl mx-auto'} w-full pt-24 pb-12`}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={pathname}
