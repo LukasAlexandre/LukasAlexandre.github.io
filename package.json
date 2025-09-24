@@ -11,6 +11,7 @@
     "export:pages": "rm -rf out && mkdir -p out && cp -r dist/* out/ && cp dist/index.html out/404.html || true"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.4.0",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-accordion": "^1.2.10",
     "@radix-ui/react-alert-dialog": "^1.1.13",

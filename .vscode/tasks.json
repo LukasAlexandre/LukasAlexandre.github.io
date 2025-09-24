@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Iniciar Vite em modo desenvolvimento",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"dev"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Iniciar Vite em modo desenvolvimento",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"dev"
+			],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Iniciar Vite em modo desenvolvimento",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"dev"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}
